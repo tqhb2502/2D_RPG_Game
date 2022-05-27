@@ -84,12 +84,18 @@ public class Player extends Entity{
 			
 			collisionOn = false;	// reset collision status
 			
-			// check tile collision
+			// TILE COLLISION
 			gp.cChecker.checkTile(this);
 			
-			// check object collision
+			// OBJECT COLLISION
 			int objectIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objectIndex);
+			
+			// CHECK EVENT
+			gp.eHandler.checkEvent();
+			
+//			// RESET
+//			gp.keyH.enterPressed = false;
 			
 			// if collision is false, player can move
 			if (collisionOn == false) {
@@ -121,6 +127,7 @@ public class Player extends Entity{
 				spriteCounter = 0;		// reset counter
 			}	
 		} else {
+			// switch to stand still animation when no key is pressed
 			standCounter++;
 			
 			if (standCounter == 20) {
@@ -137,9 +144,6 @@ public class Player extends Entity{
 	}
 	
 	public void draw(Graphics2D g2) {
-//		g2.setColor(Color.white);
-//		
-//		g2.fillRect(x, y, gp.tileSize, gp.tileSize);	// draw a rectangle
 		
 		BufferedImage image = null;
 		

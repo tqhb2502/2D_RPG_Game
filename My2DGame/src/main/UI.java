@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -13,26 +14,22 @@ import object.SuperObject;
 public class UI {
 	GamePanel gp;
 	Graphics2D g2;
+	
 	public int commandNum = 0;
 	
-//	BufferedImage keyImage;		// store key image
 	BufferedImage heart_full, heart_half, heart_blank; // store heart
+	
 	Boolean messageOn = false;		// used to display notification message
 	String message = "";
 	int messageCounter = 0;
 	
-	public Boolean gameFinished = false;	// the game is finished or not yet
+	String currentDialogue;
 	
-	DecimalFormat dFormat = new DecimalFormat("#0.00");		// used to format play time when it is printed
+	public Boolean gameFinished = false;	// the game is finished or not yet
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-//		arial_40 = new Font("Arial", Font.PLAIN, 40);	// set the font for text
-//		arial_80B = new Font("Arial", Font.BOLD, 80);
-		
-//		OBJ_Key key = new OBJ_Key();	// get key's image to display on UI
-//		keyImage = key.image;
 		SuperObject heart = new OBJ_Heart();
 		heart_full = heart.image;
 		heart_half = heart.image2;
@@ -46,9 +43,6 @@ public class UI {
 	
 	public void draw(Graphics2D g2) {
 		this.g2 = g2;
-		
-//		g2.setFont(arial_40);
-//		g2.setColor(Color.white);
 		
 		// TITLE STATE
 		if (gp.gameState == gp.titleState) {
@@ -66,11 +60,15 @@ public class UI {
 			drawPauseScreen();
 			drawPlayerLife();
 		}
+		
+		// DIALOGUE STATE
+		if (gp.gameState == gp.dialogueState) {
+			drawDialogueScreen();
+		}
 	}
 	
 	private void drawPlayerLife() {
-		// TODO Auto-generated method stub
-		//draw maxlife
+		// DRAW MAX LIFE
 		int x = gp.tileSize/2;
 		int y = gp.tileSize/2;
 		int i = 0;
@@ -79,7 +77,8 @@ public class UI {
 			i++;
 			x+= gp.tileSize;
 		}
-		//draw heart_full
+		
+		//	DRAW CURRENT LIFE
 		x = gp.tileSize/2;
 		y = gp.tileSize/2;
 		i = 0;
@@ -87,15 +86,11 @@ public class UI {
 			g2.drawImage(heart_half, x, y,gp.tileSize,gp.tileSize,null);
 			i++;
 			if(i<gp.player.life) {
-			g2.drawImage(heart_full, x, y,gp.tileSize,gp.tileSize,null);
+				g2.drawImage(heart_full, x, y,gp.tileSize,gp.tileSize,null);
 			}
 			i++;
 			x+= gp.tileSize;
 		}
-		
-		
-		// draw heart half
-		
 	}
 
 	public void drawTitleScreen() {
@@ -160,6 +155,37 @@ public class UI {
 		int y = gp.screenHeight / 2;
 		
 		g2.drawString(text, x, y);
+	}
+	
+	public void drawDialogueScreen() {
+		// WINDOW
+		int x = gp.tileSize * 2;
+		int y = gp.tileSize / 2;
+		int width = gp.screenWidth - gp.tileSize * 4;
+		int height = gp.tileSize * 4;
+		
+		drawSubWindow(x, y, width, height);
+		
+		// DIALOGUE
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
+		x += gp.tileSize;
+		y += gp.tileSize;
+		
+		for (String line: currentDialogue.split("\n")) {
+			g2.drawString(line, x, y);
+			y += 40;
+		}
+	}
+	
+	public void drawSubWindow(int x, int y, int width, int height) {
+		Color c = new Color(0, 0, 0, 210);
+		g2.setColor(c);
+		g2.fillRoundRect(x, y, width, height, 35, 35);
+		
+		c = new Color(255, 255, 255);
+		g2.setColor(c);
+		g2.setStroke(new BasicStroke(5));
+		g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
 	}
 	
 	public int getXForCenteredText(String text) {

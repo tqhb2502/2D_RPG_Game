@@ -31,11 +31,12 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// SYSTEM
 	public TileManager tileM = new TileManager(this);
-	KeyHandler keyH = new KeyHandler(this);
+	public KeyHandler keyH = new KeyHandler(this);
 	Sound music = new Sound();
 	Sound se = new Sound();
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this);		// setup game environment
+	public EventHandler eHandler = new EventHandler(this);
 	Thread gameThread;
 	public double playTime = 0;
 	
@@ -53,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int titleState = 0;
 	public final int playState = 1;
 	public final int pauseState = 2;
+	public final int dialogueState = 3;
 	
 	// CONSTRUCTOR
 	public GamePanel() {
@@ -65,7 +67,6 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public void setupGame() {	// pre-setup for our game
 		aSetter.setObject();
-		playMusic(0);
 		gameState = titleState;
 	}
 	
@@ -144,9 +145,6 @@ public class GamePanel extends JPanel implements Runnable{
 	public void update() {
 		if (gameState == playState) {
 			player.update();
-		}
-		if (gameState == pauseState) {
-			// do nothing
 		}
 	}
 	
