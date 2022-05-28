@@ -24,8 +24,11 @@ public class Player extends Entity{
 		this.gp = gp;
 		this.keyH = keyH;
 		
-		screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);		// lấy vị trí chính giữa của cửa sổ game, nhưng vị trí này được dùng làm vị trí trái trên
-		screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);	// khi vẽ player, nên phải trừ đi 1 nửa tile size, để player được vẽ ở vị trí chính giữa của cửa sổ game
+		// lấy vị trí chính giữa của cửa sổ game, nhưng vị trí này được dùng làm vị trí trái trên
+		// nên khi vẽ player, nên phải trừ đi 1 nửa tile size
+		// để player được vẽ ở vị trí chính giữa của cửa sổ game
+		screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);	
+		screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
 		
 		solidArea = new Rectangle();	// set the solid area of player
 		solidArea.x = 9;
