@@ -11,20 +11,20 @@ public class Entity {	// parent class for every entity in the game
 	
 	public int worldX, worldY;	// position of entity in world map
 	public int speed;
+	public String direction = "none";	// the direction of entity
+	public String name;
 	
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;	// used to store entity's image
-	public String direction = "none";	// the direction of entity
+	public BufferedImage image, image2, image3;		// store image to be displayed
 	
+	public int spriteNum = 1;	// the index of current displayed image
 	public int spriteCounter = 0;	// the number of frames that the entity moves
 	public int standCounter = 0;	// the number of frames that the entity stands still
-	public int spriteNum = 1;	// the index of current displayed image
+	public int actionLockCounter = 0;	// entity can not do a specific action until counter counts to certain number
 	
-	public Rectangle solidArea;		// the solid area of entity, if it hit a tile that is not passable, entity can not move
-	public int solidAreaDefaultX, solidAreaDefaultY;	// store default value of solidArea, because we may change the x and y of solidArea later
+	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);	// the solid area of entity, if it hit a tile that is not passable, entity can not move
+	public int solidAreaDefaultX = 0, solidAreaDefaultY = 0;	// store default value of solidArea, because we may change the x and y of solidArea later
 	public boolean collisionOn = false;		// check if entity is in collision or not
-	
-	public BufferedImage image, image2, image3;		// store image to be displayed
-	public String name;
 	public boolean collision = false;	// this entity can be pass through or not
     
 	// entity status
@@ -34,6 +34,56 @@ public class Entity {	// parent class for every entity in the game
 	// CONSTRUCTOR
 	public Entity(GamePanel gp) {
 		this.gp = gp;
+	}
+	
+	public void setAction() {
+		// to be overridden
+	}
+	
+	public void update() {
+		setAction();
+		
+		collisionOn = false;
+		
+		// TILE COLLISION
+		gp.cChecker.checkTile(this);
+		
+		// OBJECT COLLISION
+		gp.cChecker.checkObject(this, false);
+		
+		// PLAYER COLLISION
+		gp.cChecker.checkPlayer(this);
+		
+		// if collisionOn is false, player can move
+		if (collisionOn == false) {
+			switch (direction) {
+			case "up":
+				worldY -= speed;	// update position
+				break;
+			case "down":
+				worldY += speed;
+				break;
+			case "left":
+				worldX -= speed;
+				break;
+			case "right":
+				worldX += speed;
+				break;
+			}
+		}
+		
+		// SWITCH SPRITE
+		spriteCounter++;	// everytime a frame passed, increase the counter
+		
+		if (spriteCounter > 10) {
+			if (spriteNum == 1) {	// change the image
+				spriteNum = 2;
+			} else {
+				spriteNum = 1;
+			}
+			
+			spriteCounter = 0;		// reset counter
+		}
 	}
 	
 	public void draw(Graphics2D g2) {

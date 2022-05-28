@@ -46,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// UI
 	public UI ui = new UI(this);
 	
-	// PLAYER AND OBJECTS
+	// ENTITY
 	public Player player = new Player(this, keyH);
 	public Entity obj[] = new Entity[10];	// store game's object, upto 10 objects
 	public Entity npc[] = new Entity[10];	// store npc, upto 10 npcs
@@ -73,12 +73,15 @@ public class GamePanel extends JPanel implements Runnable{
 		this.setFocusable(true);	// this game panel can be focused to receive key input
 	}
 	
-	public void setupGame() {	// pre-setup for our game
+	// pre-setup for our game
+	public void setupGame() {
 		aSetter.setObject();
+		aSetter.setNPC();
 		gameState = titleState;
 	}
 	
-	public void startGameThread() {		// start game loop
+	// start game loop
+	public void startGameThread() {
 		gameThread = new Thread(this);
 		gameThread.start();		// this will call run method
 	}
@@ -142,8 +145,6 @@ public class GamePanel extends JPanel implements Runnable{
 			}
 			
 			if (timer >= 1000000000) {
-				System.out.println("FPS: " + drawCount);
-				
 				timer = 0;
 				drawCount = 0;
 			}
@@ -151,8 +152,18 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	public void update() {
+		
 		if (gameState == playState) {
+			
+			// PLAYER
 			player.update();
+			
+			// NPC
+			for (int i = 0; i < npc.length; i++) {
+				if (npc[i] != null) {
+					npc[i].update();
+				}
+			}
 		}
 	}
 	

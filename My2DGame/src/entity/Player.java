@@ -18,13 +18,15 @@ public class Player extends Entity{
 		super(gp);
 		this.keyH = keyH;
 		
+		// INFO
+		setDefaultValue();
 		// lấy vị trí chính giữa của cửa sổ game, nhưng vị trí này được dùng làm vị trí trái trên
 		// nên khi vẽ player, nên phải trừ đi 1 nửa tile size
 		// để player được vẽ ở vị trí chính giữa của cửa sổ game
 		screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);	
 		screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
 		
-		solidArea = new Rectangle();	// set the solid area of player
+		// SOLID AREA
 		solidArea.x = 9;
 		solidArea.y = 21;
 		solidArea.width = 27;
@@ -32,14 +34,14 @@ public class Player extends Entity{
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
-		setDefaultValue();
-		getPlayerImage();
+		// IMAGE
+		getImage();
 	}
 	
 	public void setDefaultValue() {		// default value for player
 		worldX = gp.tileSize * 23;
-		worldY = gp.tileSize * 21;
-		speed = 4;
+		worldY = gp.tileSize * 22;
+		speed = 6;
 		direction = "down";
 		// player status(27/05/2022)
 		maxLife = 6;
@@ -47,7 +49,7 @@ public class Player extends Entity{
 	}
 	
 	// get the images of player
-	public void getPlayerImage() {
+	public void getImage() {
 		try {
 			up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
 			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
@@ -89,6 +91,10 @@ public class Player extends Entity{
 			int objectIndex = gp.cChecker.checkObject(this, true);
 			pickUpObject(objectIndex);
 			
+			// NPC COLLISION
+			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+			interactNPC(npcIndex);
+			
 			// CHECK EVENT
 			gp.eHandler.checkEvent();
 			
@@ -113,6 +119,7 @@ public class Player extends Entity{
 				}
 			}
 			
+			// SWITCH SPRITE
 			spriteCounter++;	// everytime a frame passed, increase the counter
 			
 			if (spriteCounter > 10) {
@@ -123,7 +130,7 @@ public class Player extends Entity{
 				}
 				
 				spriteCounter = 0;		// reset counter
-			}	
+			}
 		} else {
 			// switch to stand still animation when no key is pressed
 			standCounter++;
@@ -135,9 +142,19 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void pickUpObject(int index) {	// handle pick up action
+	// handle pick up action
+	public void pickUpObject(int index) {
+		
 		if (index != 999) {
 			
+		}
+	}
+	
+	// interact with NPC
+	public void interactNPC(int index) {
+		
+		if (index != 999) {
+			System.out.println("Hiting NPC!");
 		}
 	}
 }
