@@ -4,10 +4,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OBJ_Heart extends SuperObject{
-	public OBJ_Heart() {
-		name = "Heart";
+import entity.Entity;
+import main.GamePanel;
+
+public class OBJ_Heart extends Entity{
+	public OBJ_Heart(GamePanel gp) {
 		
+		super(gp);
+		
+		name = "Heart";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/heart_full.png"));
 			image2 = ImageIO.read(getClass().getResourceAsStream("/objects/heart_half.png"));

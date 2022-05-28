@@ -1,9 +1,6 @@
 package entity;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -12,16 +9,13 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class Player extends Entity{
-	GamePanel gp;
 	KeyHandler keyH;
 	
 	public final int screenX;
 	public final int screenY;
 	
-//	public int hasKey = 0;		// how many keys that player has
-	
 	public Player(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;
+		super(gp);
 		this.keyH = keyH;
 		
 		// lấy vị trí chính giữa của cửa sổ game, nhưng vị trí này được dùng làm vị trí trái trên
@@ -33,10 +27,10 @@ public class Player extends Entity{
 		solidArea = new Rectangle();	// set the solid area of player
 		solidArea.x = 9;
 		solidArea.y = 21;
-		solidAreaDefaultX = solidArea.x;
-		solidAreaDefaultY = solidArea.y;
 		solidArea.width = 27;
 		solidArea.height = 21;
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		
 		setDefaultValue();
 		getPlayerImage();
@@ -48,11 +42,12 @@ public class Player extends Entity{
 		speed = 4;
 		direction = "down";
 		// player status(27/05/2022)
-		 maxLife = 6;
-		 life = maxLife;// 2 life = 1 heart
+		maxLife = 6;
+		life = maxLife; // 2 life = 1 heart
 	}
 	
-	public void getPlayerImage() {		// get the images of player
+	// get the images of player
+	public void getPlayerImage() {
 		try {
 			up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
 			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
@@ -100,7 +95,7 @@ public class Player extends Entity{
 //			// RESET
 //			gp.keyH.enterPressed = false;
 			
-			// if collision is false, player can move
+			// if collisionOn is false, player can move
 			if (collisionOn == false) {
 				switch (direction) {
 				case "up":
@@ -144,47 +139,5 @@ public class Player extends Entity{
 		if (index != 999) {
 			
 		}
-	}
-	
-	public void draw(Graphics2D g2) {
-		
-		BufferedImage image = null;
-		
-		switch(direction) {
-		case "up":
-			if (spriteNum == 1) {
-				image = up1;
-			}
-			if (spriteNum == 2) {
-				image = up2;
-			}
-			break;
-		case "down":
-			if (spriteNum == 1) {
-				image = down1;
-			}
-			if (spriteNum == 2) {
-				image = down2;
-			}
-			break;
-		case "left":
-			if (spriteNum == 1) {
-				image = left1;
-			}
-			if (spriteNum == 2) {
-				image = left2;
-			}
-			break;
-		case "right":
-			if (spriteNum == 1) {
-				image = right1;
-			}
-			if (spriteNum == 2) {
-				image = right2;
-			}
-			break;
-		}
-		
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 	}
 }

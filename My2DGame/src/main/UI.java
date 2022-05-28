@@ -5,11 +5,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
 
+import entity.Entity;
 import object.OBJ_Heart;
-import object.OBJ_Key;
-import object.SuperObject;
 
 public class UI {
 	GamePanel gp;
@@ -30,7 +28,7 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-		SuperObject heart = new OBJ_Heart();
+		Entity heart = new OBJ_Heart(gp);
 		heart_full = heart.image;
 		heart_half = heart.image2;
 		heart_blank = heart.image3;

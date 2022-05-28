@@ -4,10 +4,15 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class OBJ_Key extends SuperObject{	// object key
-	public OBJ_Key() {
-		name = "Key";
+import entity.Entity;
+import main.GamePanel;
+
+public class OBJ_Key extends Entity{	// object key
+	public OBJ_Key(GamePanel gp) {
 		
+		super(gp);
+		
+		name = "Key";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
 		} catch (IOException e) {

@@ -52,8 +52,9 @@ public class TileManager {
 	}
 	
 	public void loadMap(String filePath) {
+		// read map info from .txt map data file
 		try {
-			InputStream is = getClass().getResourceAsStream(filePath);		// read map info from .txt map data file
+			InputStream is = getClass().getResourceAsStream(filePath);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
 			
 			int col = 0;
@@ -90,15 +91,21 @@ public class TileManager {
 		while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
 			int tileNum = mapTileNum[worldCol][worldRow];
 			
-			int worldX = worldCol * gp.tileSize;	// get the x and y of the tile
+			// get the x and y of the tile
+			int worldX = worldCol * gp.tileSize;
 			int worldY = worldRow * gp.tileSize;
-			int screenX = worldX - gp.player.worldX + gp.player.screenX;	// vị trí vẽ tile khi lấy player làm gốc
-			int screenY = worldY - gp.player.worldY + gp.player.screenY;	// chú ý rằng player luôn được vẽ ở giữa cửa sổ game, nên cần cộng thêm screenX và screenY của player để lấy được tọa độ chính xác
 			
+			// only draw tiles within screen's range around player
 			if (worldX > gp.player.worldX - gp.player.screenX - gp.tileSize
 				&& worldX < gp.player.worldX + gp.player.screenX + gp.tileSize
 				&& worldY > gp.player.worldY - gp.player.screenY - gp.tileSize
-				&& worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {	// only draw tiles within screen's range around player
+				&& worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+				
+				// vị trí vẽ tile khi lấy player làm gốc
+				// chú ý rằng player luôn được vẽ ở giữa cửa sổ game,
+				// nên cần cộng thêm screenX và screenY của player để lấy được tọa độ chính xác
+				int screenX = worldX - gp.player.worldX + gp.player.screenX;
+				int screenY = worldY - gp.player.worldY + gp.player.screenY;
 				
 				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 			}
