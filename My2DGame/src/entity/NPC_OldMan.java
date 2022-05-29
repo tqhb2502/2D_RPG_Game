@@ -17,10 +17,10 @@ public class NPC_OldMan extends Entity{
 		direction = "down";
 		
 		// SOLID AREA
-		solidArea.x = 9;
-		solidArea.y = 21;
-		solidArea.width = 27;
-		solidArea.height = 21;
+		solidArea.x = 8;
+		solidArea.y = 16;
+		solidArea.width = 32;
+		solidArea.height = 32;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		
@@ -45,9 +45,7 @@ public class NPC_OldMan extends Entity{
 
 	public void setAction() {
 		
-		actionLockCounter++;
-		
-		if (actionLockCounter == 120) {
+		if (actionLockCounter == 0) {
 		
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
@@ -68,7 +66,9 @@ public class NPC_OldMan extends Entity{
 				direction = "right";
 			}
 			
-			actionLockCounter = 0;
+			actionLockCounter = 120;
 		}
+		
+		actionLockCounter--;
 	}
 }

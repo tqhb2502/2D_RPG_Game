@@ -64,6 +64,7 @@ public class EventHandler {
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "You are drinking the water.\nYour life has been recovered!";
 		gp.player.life = gp.player.maxLife;
+		canTouchEvent = false;
 	}
 	
 	public void teleportPortal(int col, int row, int gameState) {

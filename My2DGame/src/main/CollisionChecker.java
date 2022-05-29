@@ -57,7 +57,7 @@ public class CollisionChecker {
 	}
 	
 	// ENTITY TO OBJECT
-	public int checkObject(Entity entity, boolean player) {
+	public int checkObject(Entity entity) {
 		int index = 999;	// index of the object that entity collided
 		
 		for (int i = 0; i < gp.obj.length; i++) {
@@ -87,14 +87,13 @@ public class CollisionChecker {
 				}
 				
 				// see if there is collision
-				if (entity.solidArea.intersects(gp.obj[i].solidArea)) {		// check if 2 solid areas collide or not
+				if (entity.solidArea.intersects(gp.obj[i].solidArea)) {	// check if 2 solid areas collide or not
+					
 					if (gp.obj[i].collision == true) {		// check object collision
 						entity.collisionOn = true;
 					}
 					
-					if (player == true) {	// check if it is player, for pick up feature,...
-						index = i;
-					}
+					index = i;
 				}
 				
 				// reset solid area's x and y back to default value
@@ -109,45 +108,45 @@ public class CollisionChecker {
 		return index;
 	}
 	
-	// PLAYER TO OTHER ENTITIES
-	public int checkEntity(Entity player, Entity[] target) {
-		int index = 999;	// index of the entity that player collided
+	// ONE ENTITY TO OTHER ENTITIES (EXCEPT PLAYER)
+	public int checkEntity(Entity entity, Entity[] target) {
+		int index = 999;	// index of the entity that THE CURRENT ENTITY collided
 		
 		for (int i = 0; i < target.length; i++) {
-			if (target[i] != null) {
-				// get player solid area's position in world map
-				player.solidArea.x = player.worldX + player.solidArea.x;
-				player.solidArea.y = player.worldY + player.solidArea.y;
+			if (target[i] != null && target[i] != entity) {
+				// get THE CURRENT ENTITY solid area's position in world map
+				entity.solidArea.x = entity.worldX + entity.solidArea.x;
+				entity.solidArea.y = entity.worldY + entity.solidArea.y;
 				
 				// get entity solid area's position in world map
 				target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
 				target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
 				
-				// simulate player's movement, find out next position
-				switch (player.direction) {
+				// simulate THE CURRENT ENTITY's movement, find out next position
+				switch (entity.direction) {
 				case "up":
-					player.solidArea.y -= player.speed;
+					entity.solidArea.y -= entity.speed;
 					break;
 				case "down":
-					player.solidArea.y += player.speed;
+					entity.solidArea.y += entity.speed;
 					break;
 				case "left":
-					player.solidArea.x -= player.speed;
+					entity.solidArea.x -= entity.speed;
 					break;
 				case "right":
-					player.solidArea.x += player.speed;
+					entity.solidArea.x += entity.speed;
 					break;
 				}
 				
 				// see if there is collision
-				if (player.solidArea.intersects(target[i].solidArea)) {		// check if 2 solid areas collide or not
-					player.collisionOn = true;
+				if (entity.solidArea.intersects(target[i].solidArea)) {	// check if 2 solid areas collide or not
+					entity.collisionOn = true;
 					index = i;
 				}
 				
 				// reset solid area's x and y back to default value
-				player.solidArea.x = player.solidAreaDefaultX;
-				player.solidArea.y = player.solidAreaDefaultY;
+				entity.solidArea.x = entity.solidAreaDefaultX;
+				entity.solidArea.y = entity.solidAreaDefaultY;
 				
 				target[i].solidArea.x = target[i].solidAreaDefaultX;
 				target[i].solidArea.y = target[i].solidAreaDefaultY;
@@ -158,7 +157,10 @@ public class CollisionChecker {
 	}
 	
 	// OTHER ENTITIES TO PLAYER
-	public void checkPlayer(Entity entity) {
+	public boolean checkPlayer(Entity entity) {
+		
+		boolean contactPlayer = false;
+		
 		// get entity solid area's position in world map
 		entity.solidArea.x = entity.worldX + entity.solidArea.x;
 		entity.solidArea.y = entity.worldY + entity.solidArea.y;
@@ -186,6 +188,7 @@ public class CollisionChecker {
 		// see if there is collision
 		if (entity.solidArea.intersects(gp.player.solidArea)) {		// check if 2 solid areas collide or not
 			entity.collisionOn = true;
+			contactPlayer = true;
 		}
 		
 		// reset solid area's x and y back to default value
@@ -194,5 +197,7 @@ public class CollisionChecker {
 		
 		gp.player.solidArea.x = gp.player.solidAreaDefaultX;
 		gp.player.solidArea.y = gp.player.solidAreaDefaultY;
+		
+		return contactPlayer;
 	}
 }

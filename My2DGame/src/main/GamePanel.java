@@ -48,8 +48,9 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// ENTITY
 	public Player player = new Player(this, keyH);
-	public Entity obj[] = new Entity[10];	// store game's object, upto 10 objects
-	public Entity npc[] = new Entity[10];	// store npc, upto 10 npcs
+	public Entity obj[] = new Entity[10];	// store displayed object, upto 10 objects
+	public Entity npc[] = new Entity[10];	// store displayed npc, upto 10 npcs
+	public Entity monster[] = new Entity[20];	// store displayed monster, upto 20 monsters
 	// a array to store all entities in the game
 	// so we can sort them in order of y coordinate
 	// and draw them one by one to avoid unnatural overriding images
@@ -77,6 +78,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public void setupGame() {
 		aSetter.setObject();
 		aSetter.setNPC();
+		aSetter.setMonster();
 		gameState = titleState;
 	}
 	
@@ -164,6 +166,13 @@ public class GamePanel extends JPanel implements Runnable{
 					npc[i].update();
 				}
 			}
+			
+			// MONSTER
+			for (int i = 0; i < monster.length; i++) {
+				if (monster[i] != null) {
+					monster[i].update();
+				}
+			}
 		}
 	}
 	
@@ -178,17 +187,24 @@ public class GamePanel extends JPanel implements Runnable{
 			tileM.draw(g2);		// make sure to draw tile before player, otherwise, we can not see player
 			
 			// ADD ENTITIES TO ARRAY
+			// player
 			entityList.add(player);
-			
+			// npc
 			for (int i = 0; i < npc.length; i++) {
 				if (npc[i] != null) {
 					entityList.add(npc[i]);
 				}
 			}
-			
+			// object
 			for (int i = 0; i < obj.length; i++) {
 				if (obj[i] != null) {
 					entityList.add(obj[i]);
+				}
+			}
+			// monster
+			for (int i = 0; i < monster.length; i++) {
+				if (monster[i] != null) {
+					entityList.add(monster[i]);
 				}
 			}
 			

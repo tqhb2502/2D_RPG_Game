@@ -21,7 +21,7 @@ public class UI {
 	String message = "";
 	int messageCounter = 0;
 	
-	String currentDialogue;
+	public String currentDialogue;
 	
 	public Boolean gameFinished = false;	// the game is finished or not yet
 	

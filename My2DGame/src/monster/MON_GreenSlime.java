@@ -1,6 +1,7 @@
 package monster;
 
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -10,6 +11,7 @@ import main.GamePanel;
 public class MON_GreenSlime extends Entity{
 
 	public MON_GreenSlime(GamePanel gp) {
+		
 		super(gp);
 		
 		// INFO
@@ -17,6 +19,7 @@ public class MON_GreenSlime extends Entity{
 		speed = 1;
 		maxLife = 4;
 		life = maxLife;
+		type = 3;
 		
 		// SOLID AREA
 		solidArea.x = 3;
@@ -31,6 +34,7 @@ public class MON_GreenSlime extends Entity{
 	}
 	
 	public void getImage() {
+		
 		try {
 			up1 = ImageIO.read(getClass().getResourceAsStream("/monster/greenslime_down_1.png"));
 			up2 = ImageIO.read(getClass().getResourceAsStream("/monster/greenslime_down_2.png"));
@@ -43,5 +47,34 @@ public class MON_GreenSlime extends Entity{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setAction() {
+		
+		if (actionLockCounter == 0) {
+			
+			Random random = new Random();
+			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
+			
+			if (i <= 25) {
+				direction = "up";
+			}
+			
+			if (25 < i && i <= 50) {
+				direction = "down";
+			}
+			
+			if (50 < i && i <= 75) {
+				direction = "left";
+			}
+			
+			if (75 < i) {
+				direction = "right";
+			}
+			
+			actionLockCounter = 120;
+		}
+		
+		actionLockCounter--;
 	}
 }
