@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 
-public class Entity {	// parent class for every entity in the game
+public abstract class Entity {	// parent class for every entity in the game
 	GamePanel gp;
 	
 	public int worldX, worldY;	// position of entity in world map
