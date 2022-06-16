@@ -11,7 +11,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import entity.Entity;
-import entity.Player;
+import player.Player;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{

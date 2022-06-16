@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import main.GamePanel;
 
-public class OBJ_Key extends Entity{	// object key
-	public OBJ_Key(GamePanel gp) {
+public class Key extends Entity{	// object key
+	public Key(GamePanel gp) {
 		
 		super(gp);
 		

@@ -1,15 +1,16 @@
-package entity;
+package npc;
 
 import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import entity.Entity;
 import main.GamePanel;
 
-public class NPC_OldMan extends Entity{
+public class OldMan extends Entity{
 
-	public NPC_OldMan(GamePanel gp) {
+	public OldMan(GamePanel gp) {
 		super(gp);
 		
 		// INFO

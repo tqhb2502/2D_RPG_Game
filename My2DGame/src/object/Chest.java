@@ -7,18 +7,16 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import main.GamePanel;
 
-public class OBJ_Door extends Entity{
-	public OBJ_Door(GamePanel gp) {
+public class Chest extends Entity{
+	public Chest(GamePanel gp) {
 		
 		super(gp);
 		
-		name = "Door";
+		name = "Chest";
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/objects/chest.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		collision = true;
 	}
 }

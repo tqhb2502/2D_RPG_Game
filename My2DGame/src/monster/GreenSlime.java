@@ -8,9 +8,9 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import main.GamePanel;
 
-public class MON_GreenSlime extends Entity{
+public class GreenSlime extends Entity{
 
-	public MON_GreenSlime(GamePanel gp) {
+	public GreenSlime(GamePanel gp) {
 		
 		super(gp);
 		

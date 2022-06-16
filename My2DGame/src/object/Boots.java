@@ -7,14 +7,14 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import main.GamePanel;
 
-public class OBJ_Chest extends Entity{
-	public OBJ_Chest(GamePanel gp) {
+public class Boots extends Entity{
+	public Boots(GamePanel gp) {
 		
 		super(gp);
 		
-		name = "Chest";
+		name = "Boots";
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/chest.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

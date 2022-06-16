@@ -1,4 +1,4 @@
-package entity;
+package player;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
@@ -7,6 +7,7 @@ import java.nio.file.spi.FileSystemProvider;
 
 import javax.imageio.ImageIO;
 
+import entity.Entity;
 import main.GamePanel;
 import main.KeyHandler;
 

@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import entity.Entity;
-import object.OBJ_Heart;
+import object.Heart;
 
 public class UI {
 	GamePanel gp;
@@ -28,7 +28,7 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-		Entity heart = new OBJ_Heart(gp);
+		Entity heart = new Heart(gp);
 		heart_full = heart.image;
 		heart_half = heart.image2;
 		heart_blank = heart.image3;
