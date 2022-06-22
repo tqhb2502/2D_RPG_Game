@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import entity.Entity;
-import object.Heart;
+import item.Heart;
 
 public class UI {
 	GamePanel gp;

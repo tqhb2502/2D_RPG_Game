@@ -17,15 +17,6 @@ public abstract class Entity {	// parent class for every entity in the game
 	public String direction = "none";	// the direction of entity
 	public boolean attacking = false;
 	
-	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;	// store entity's walking image
-	public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2,
-		attackRight1, attackRight2;		// store entity's attacking image
-	public BufferedImage image, image2, image3;		// store image to be displayed
-	
-	public int spriteNum = 1;	// the index of current displayed image
-	public int spriteCounter = 0;	// the number of frames that the entity moves
-	public int standCounter = 0;	// the number of frames that the entity stands still
-	
 	public int actionLockCounter = 0;	// entity can not do a specific action until counter counts to certain number
 	
 	public boolean invincible = false;	// can receive damage from monsters or not
@@ -114,64 +105,6 @@ public abstract class Entity {	// parent class for every entity in the game
 				invincible = false;
 				invincibleCounter = 0;
 			}
-		}
-	}
-	
-	public void draw(Graphics2D g2) {
-		// only draw entity within screen's range around player
-		if (worldX > gp.player.worldX - gp.player.screenX - gp.tileSize
-				&& worldX < gp.player.worldX + gp.player.screenX + gp.tileSize
-				&& worldY > gp.player.worldY - gp.player.screenY - gp.tileSize
-				&& worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
-				
-			switch(direction) {
-			case "up":
-				if (spriteNum == 1) {
-					image = up1;
-				}
-				if (spriteNum == 2) {
-					image = up2;
-				}
-				break;
-			case "down":
-				if (spriteNum == 1) {
-					image = down1;
-				}
-				if (spriteNum == 2) {
-					image = down2;
-				}
-				break;
-			case "left":
-				if (spriteNum == 1) {
-					image = left1;
-				}
-				if (spriteNum == 2) {
-					image = left2;
-				}
-				break;
-			case "right":
-				if (spriteNum == 1) {
-					image = right1;
-				}
-				if (spriteNum == 2) {
-					image = right2;
-				}
-				break;
-			}
-			
-			// position on screen where we draw entity
-			int screenX = worldX - gp.player.worldX + gp.player.screenX;
-			int screenY = worldY - gp.player.worldY + gp.player.screenY;
-			
-			// INVINCIBLE VISUAL EFFECT
-			if (invincible == true) {
-				g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5F));
-			}
-			
-			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-			
-			// RESET ALPHA
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
 		}
 	}
 }

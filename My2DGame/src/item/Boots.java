@@ -1,4 +1,4 @@
-package object;
+package item;
 
 import java.io.IOException;
 
@@ -7,14 +7,14 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import main.GamePanel;
 
-public class Key extends Entity{	// object key
-	public Key(GamePanel gp) {
+public class Boots extends Entity{
+	public Boots(GamePanel gp) {
 		
 		super(gp);
 		
-		name = "Key";
+		name = "Boots";
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
+			image = ImageIO.read(getClass().getResourceAsStream("/objects/boots.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

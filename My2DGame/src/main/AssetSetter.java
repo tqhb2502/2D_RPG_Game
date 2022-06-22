@@ -1,9 +1,9 @@
 package main;
 
+import item.Door;
+import item.Key;
 import monster.GreenSlime;
 import npc.OldMan;
-import object.Door;
-import object.Key;
 
 public class AssetSetter {
 	GamePanel gp;
