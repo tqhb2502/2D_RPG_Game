@@ -11,6 +11,7 @@ import main.GamePanel;
 public class OldMan extends Entity{
 
 	public OldMan(GamePanel gp) {
+		
 		super(gp);
 		
 		// INFO
@@ -24,21 +25,19 @@ public class OldMan extends Entity{
 		solidArea.height = 32;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
-		
-		// IMAGE
-		getImage();
 	}
 	
-	public void getImage() {
+	public void setImage() {
+		
 		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_right_2.png"));
+			this.entityGraphic.up1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_up_1.png"));
+			this.entityGraphic.up2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_up_2.png"));
+			this.entityGraphic.down1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_down_1.png"));
+			this.entityGraphic.down2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_down_2.png"));
+			this.entityGraphic.left1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_left_1.png"));
+			this.entityGraphic.left2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_left_2.png"));
+			this.entityGraphic.right1 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_right_1.png"));
+			this.entityGraphic.right2 = ImageIO.read(getClass().getResourceAsStream("/npc/oldman_right_2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,7 +46,6 @@ public class OldMan extends Entity{
 	public void setAction() {
 		
 		if (actionLockCounter == 0) {
-		
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
 			

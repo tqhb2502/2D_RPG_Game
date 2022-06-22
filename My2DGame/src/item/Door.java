@@ -8,17 +8,18 @@ import entity.Entity;
 import main.GamePanel;
 
 public class Door extends Entity{
+	
 	public Door(GamePanel gp) {
-		
 		super(gp);
-		
 		name = "Door";
+		collision = true;
+	}
+	
+	public void setImage() {
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
+			this.entityGraphic.image = ImageIO.read(getClass().getResourceAsStream("/objects/door.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		collision = true;
 	}
 }

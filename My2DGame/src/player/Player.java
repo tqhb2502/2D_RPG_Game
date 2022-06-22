@@ -1,9 +1,6 @@
 package player;
 
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
 import java.io.IOException;
-import java.nio.file.spi.FileSystemProvider;
 
 import javax.imageio.ImageIO;
 
@@ -12,22 +9,21 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class Player extends Entity{
+	
 	KeyHandler keyH;
 	
-	public final int screenX;
-	public final int screenY;
-	
 	public Player(GamePanel gp, KeyHandler keyH) {
+		
 		super(gp);
 		this.keyH = keyH;
 		
 		// INFO
-		setDefaultValue();
-		// lấy vị trí chính giữa của cửa sổ game, nhưng vị trí này được dùng làm vị trí trái trên
-		// nên khi vẽ player, nên phải trừ đi 1 nửa tile size
-		// để player được vẽ ở vị trí chính giữa của cửa sổ game
-		screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);	
-		screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
+		worldX = gp.tileSize * 23;
+		worldY = gp.tileSize * 21;
+		speed = 6;
+		direction = "down";
+		maxLife = 6;
+		life = maxLife; // 2 life = 1 heart
 		
 		// SOLID AREA
 		solidArea.x = 8;
@@ -40,43 +36,30 @@ public class Player extends Entity{
 		// ATTACK AREA
 		attackArea.width = 36;
 		attackArea.height = 36;
+	}
+	
+	public void setImage() {
 		
-		// IMAGE
-		getImage();
-	}
-	
-	public void setDefaultValue() {		// default value for player
-		worldX = gp.tileSize * 23;
-		worldY = gp.tileSize * 21;
-		speed = 6;
-		direction = "down";
-		// player status(27/05/2022)
-		maxLife = 6;
-		life = maxLife; // 2 life = 1 heart
-	}
-	
-	// get the images of player
-	public void getImage() {
 		try {
 			// WALKING
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+			this.entityGraphic.up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
+			this.entityGraphic.up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
+			this.entityGraphic.down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
+			this.entityGraphic.down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
+			this.entityGraphic.left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
+			this.entityGraphic.left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
+			this.entityGraphic.right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
+			this.entityGraphic.right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
 			
 			// ATTACKING
-			attackUp1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_up_1.png"));
-			attackUp2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_up_2.png"));
-			attackDown1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_down_1.png"));
-			attackDown2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_down_2.png"));
-			attackLeft1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_left_1.png"));
-			attackLeft2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_left_2.png"));
-			attackRight1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_right_1.png"));
-			attackRight2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_right_2.png"));
+			this.entityGraphic.attackUp1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_up_1.png"));
+			this.entityGraphic.attackUp2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_up_2.png"));
+			this.entityGraphic.attackDown1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_down_1.png"));
+			this.entityGraphic.attackDown2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_down_2.png"));
+			this.entityGraphic.attackLeft1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_left_1.png"));
+			this.entityGraphic.attackLeft2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_left_2.png"));
+			this.entityGraphic.attackRight1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_right_1.png"));
+			this.entityGraphic.attackRight2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_attack_right_2.png"));
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
@@ -101,6 +84,7 @@ public class Player extends Entity{
 		if (attacking == true) {
 			attacking();
 		}
+		
 		// MOVEMENT KEYS
 		else if (keyH.upPressed == true || keyH.downPressed == true || 
 				keyH.leftPressed == true || keyH.rightPressed == true) {
@@ -135,9 +119,6 @@ public class Player extends Entity{
 			// EVENT
 			gp.eHandler.checkEvent();
 			
-//			// RESET
-//			gp.keyH.enterPressed = false;
-			
 			// MOVEMENT
 			// if collisionOn is false, player can move
 			if (collisionOn == false) {
@@ -158,26 +139,24 @@ public class Player extends Entity{
 			}
 			
 			// SWITCH SPRITE
-			spriteCounter++;	// everytime a frame passed, increase the counter
-			
-			if (spriteCounter > 10) {
-				
-				if (spriteNum == 1) {	// change the image
-					spriteNum = 2;
+			this.entityGraphic.spriteCounter++;
+			if (this.entityGraphic.spriteCounter > 10) {
+				if (this.entityGraphic.spriteNum == 1) {	// change the image
+					this.entityGraphic.spriteNum = 2;
 				} else {
-					spriteNum = 1;
+					this.entityGraphic.spriteNum = 1;
 				}
 				
-				spriteCounter = 0;		// reset counter
+				this.entityGraphic.spriteCounter = 0;		// reset counter
 			}
 		} else {
 			// STAND SPRITE
 			// switch to stand still animation when no key is pressed
-			standCounter++;
+			this.entityGraphic.standCounter++;
 			
-			if (standCounter == 20) {
-				spriteNum = 1;
-				standCounter = 0;
+			if (this.entityGraphic.standCounter == 20) {
+				this.entityGraphic.spriteNum = 1;
+				this.entityGraphic.standCounter = 0;
 			}
 		}
 		
@@ -195,14 +174,14 @@ public class Player extends Entity{
 	
 	public void attacking() {
 		
-		spriteCounter++;
+		this.entityGraphic.spriteCounter++;
 		
-		if (spriteCounter <= 5) {
-			spriteNum = 1;
+		if (this.entityGraphic.spriteCounter <= 5) {
+			this.entityGraphic.spriteNum = 1;
 		}
 		
-		if (5 < spriteCounter && spriteCounter <= 25) {
-			spriteNum = 2;
+		if (5 < this.entityGraphic.spriteCounter && this.entityGraphic.spriteCounter <= 25) {
+			this.entityGraphic.spriteNum = 2;
 			
 			// save player's worldX, worldY and solidArea
 			int currentWorldX = worldX;
@@ -233,89 +212,11 @@ public class Player extends Entity{
 			solidArea.height = solidAreaHeight;
 		}
 		
-		if (25 < spriteCounter) {
-			spriteNum = 1;
-			spriteCounter = 0;
+		if (25 < this.entityGraphic.spriteCounter) {
+			this.entityGraphic.spriteNum = 1;
+			this.entityGraphic.spriteCounter = 0;
 			attacking = false;
 		}
-	}
-	
-	public void draw(Graphics2D g2) {
-		
-		// GET IMAGE
-		switch(direction) {
-		case "up":
-			if (attacking == false) {
-				if (spriteNum == 1) { image = up1; }
-				if (spriteNum == 2) { image = up2; }
-			}
-			if (attacking == true) {
-				if (spriteNum == 1) { image = attackUp1; }
-				if (spriteNum == 2) { image = attackUp2; }
-			}
-			break;
-		case "down":
-			if (attacking == false) {
-				if (spriteNum == 1) { image = down1; }
-				if (spriteNum == 2) { image = down2; }
-			}
-			if (attacking == true) {
-				if (spriteNum == 1) { image = attackDown1; }
-				if (spriteNum == 2) { image = attackDown2; }
-			}
-			break;
-		case "left":
-			if (attacking == false) {
-				if (spriteNum == 1) { image = left1; }
-				if (spriteNum == 2) { image = left2; }
-			}
-			if (attacking == true) {
-				if (spriteNum == 1) { image = attackLeft1; }
-				if (spriteNum == 2) { image = attackLeft2; }
-			}
-			break;
-		case "right":
-			if (attacking == false) {
-				if (spriteNum == 1) { image = right1; }
-				if (spriteNum == 2) { image = right2; }
-			}
-			if (attacking == true) {
-				if (spriteNum == 1) { image = attackRight1; }
-				if (spriteNum == 2) { image = attackRight2; }
-			}
-			break;
-		}
-		
-		// INVINCIBLE VISUAL EFFECT
-		if (invincible == true) {
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5F));
-		}
-		
-		// DRAW
-		if (attacking == false) {
-		
-			g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-		}
-		if (attacking == true) {
-			
-			switch (direction) {
-			case "up":
-				g2.drawImage(image, screenX, screenY - gp.tileSize, gp.tileSize, gp.tileSize * 2, null);
-				break;
-			case "down":
-				g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize * 2, null);
-				break;
-			case "left":
-				g2.drawImage(image, screenX - gp.tileSize, screenY, gp.tileSize * 2, gp.tileSize, null);
-				break;
-			case "right":
-				g2.drawImage(image, screenX, screenY, gp.tileSize * 2, gp.tileSize, null);
-				break;
-			}
-		}
-		
-		// RESET ALPHA
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
 	}
 	
 	// pick up object

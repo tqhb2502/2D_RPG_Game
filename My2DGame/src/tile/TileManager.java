@@ -97,16 +97,16 @@ public class TileManager {
 			int worldY = worldRow * gp.tileSize;
 			
 			// only draw tiles within screen's range around player
-			if (worldX > gp.player.worldX - gp.player.screenX - gp.tileSize
-				&& worldX < gp.player.worldX + gp.player.screenX + gp.tileSize
-				&& worldY > gp.player.worldY - gp.player.screenY - gp.tileSize
-				&& worldY < gp.player.worldY + gp.player.screenY + gp.tileSize) {
+			if (worldX > gp.player.worldX - gp.player.entityGraphic.screenX - gp.tileSize
+				&& worldX < gp.player.worldX + gp.player.entityGraphic.screenX + gp.tileSize
+				&& worldY > gp.player.worldY - gp.player.entityGraphic.screenY - gp.tileSize
+				&& worldY < gp.player.worldY + gp.player.entityGraphic.screenY + gp.tileSize) {
 				
 				// vị trí vẽ tile khi lấy player làm gốc
 				// chú ý rằng player luôn được vẽ ở giữa cửa sổ game,
 				// nên cần cộng thêm screenX và screenY của player để lấy được tọa độ chính xác
-				int screenX = worldX - gp.player.worldX + gp.player.screenX;
-				int screenY = worldY - gp.player.worldY + gp.player.screenY;
+				int screenX = worldX - gp.player.worldX + gp.player.entityGraphic.screenX;
+				int screenY = worldY - gp.player.worldY + gp.player.entityGraphic.screenY;
 				
 				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 			}

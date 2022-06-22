@@ -11,6 +11,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import entity.Entity;
+import graphic.EntityGraphic;
 import player.Player;
 import tile.TileManager;
 
@@ -76,6 +77,8 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// pre-setup for our game
 	public void setupGame() {
+		player.setEntityGraphic(new EntityGraphic(this, player));
+		player.setImage();
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
@@ -219,7 +222,7 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			// DRAW ENTITIES
 			for (int i = 0; i < entityList.size(); i++) {
-				entityList.get(i).draw(g2);
+				entityList.get(i).entityGraphic.draw(g2);
 			}
 			
 			// CLEAR ARRAY

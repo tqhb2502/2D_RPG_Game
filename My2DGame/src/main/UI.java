@@ -28,10 +28,10 @@ public class UI {
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-		Entity heart = new Heart(gp);
-		heart_full = heart.image;
-		heart_half = heart.image2;
-		heart_blank = heart.image3;
+//		Entity heart = new Heart(gp, gp.eGraphic);
+//		heart_full = heart.entityGraphic.image;
+//		heart_half = heart.entityGraphic.image2;
+//		heart_blank = heart.entityGraphic.image3;
 	}
 	
 	public void showMessage(String text) {	// set the message to display
@@ -50,13 +50,13 @@ public class UI {
 		// PLAY STATE
 		if (gp.gameState == gp.playState) {
 			// do play state stuff
-			drawPlayerLife();
+			//drawPlayerLife();
 		}
 		
 		// PAUSE STATE
 		if (gp.gameState == gp.pauseState) {
 			drawPauseScreen();
-			drawPlayerLife();
+			//drawPlayerLife();
 		}
 		
 		// DIALOGUE STATE
@@ -65,31 +65,31 @@ public class UI {
 		}
 	}
 	
-	private void drawPlayerLife() {
-		// DRAW MAX LIFE
-		int x = gp.tileSize/2;
-		int y = gp.tileSize/2;
-		int i = 0;
-		while (i < gp.player.maxLife/2) {
-			g2.drawImage(heart_blank, x, y,gp.tileSize,gp.tileSize,null);
-			i++;
-			x+= gp.tileSize;
-		}
-		
-		//	DRAW CURRENT LIFE
-		x = gp.tileSize/2;
-		y = gp.tileSize/2;
-		i = 0;
-		while (i < gp.player.life) {
-			g2.drawImage(heart_half, x, y,gp.tileSize,gp.tileSize,null);
-			i++;
-			if(i<gp.player.life) {
-				g2.drawImage(heart_full, x, y,gp.tileSize,gp.tileSize,null);
-			}
-			i++;
-			x+= gp.tileSize;
-		}
-	}
+//	private void drawPlayerLife() {
+//		// DRAW MAX LIFE
+//		int x = gp.tileSize/2;
+//		int y = gp.tileSize/2;
+//		int i = 0;
+//		while (i < gp.player.maxLife/2) {
+//			g2.drawImage(heart_blank, x, y,gp.tileSize,gp.tileSize,null);
+//			i++;
+//			x+= gp.tileSize;
+//		}
+//		
+//		//	DRAW CURRENT LIFE
+//		x = gp.tileSize/2;
+//		y = gp.tileSize/2;
+//		i = 0;
+//		while (i < gp.player.life) {
+//			g2.drawImage(heart_half, x, y,gp.tileSize,gp.tileSize,null);
+//			i++;
+//			if(i<gp.player.life) {
+//				g2.drawImage(heart_full, x, y,gp.tileSize,gp.tileSize,null);
+//			}
+//			i++;
+//			x+= gp.tileSize;
+//		}
+//	}
 
 	public void drawTitleScreen() {
 		// screen color
@@ -113,7 +113,7 @@ public class UI {
 		// display character
 		x = gp.screenWidth / 2 - gp.tileSize;
 		y += gp.tileSize * 2;
-		g2.drawImage(gp.player.down1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+		g2.drawImage(gp.player.entityGraphic.down1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 		
 		// menu
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));

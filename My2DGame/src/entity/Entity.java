@@ -1,14 +1,13 @@
 package entity;
 
-import java.awt.AlphaComposite;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
+import graphic.EntityGraphic;
 import main.GamePanel;
 
 public abstract class Entity {	// parent class for every entity in the game
 	public GamePanel gp;
+	public EntityGraphic entityGraphic;
 	
 	public int worldX, worldY;	// position of entity in world map
 	public String name;
@@ -37,7 +36,15 @@ public abstract class Entity {	// parent class for every entity in the game
 		this.gp = gp;
 	}
 	
+	public void setEntityGraphic(EntityGraphic entityGraphic) {
+		this.entityGraphic = entityGraphic;
+	}
+	
 	public void setAction() {
+		// to be overridden
+	}
+	
+	public void setImage() {
 		// to be overridden
 	}
 	
@@ -84,16 +91,15 @@ public abstract class Entity {	// parent class for every entity in the game
 		}
 		
 		// SWITCH SPRITE
-		spriteCounter++;	// everytime a frame passed, increase the counter
-		
-		if (spriteCounter > 10) {
-			if (spriteNum == 1) {	// change the image
-				spriteNum = 2;
+		this.entityGraphic.spriteCounter++;
+		if (this.entityGraphic.spriteCounter > 10) {
+			if (this.entityGraphic.spriteNum == 1) {	// change the image
+				this.entityGraphic.spriteNum = 2;
 			} else {
-				spriteNum = 1;
+				this.entityGraphic.spriteNum = 1;
 			}
 			
-			spriteCounter = 0;		// reset counter
+			this.entityGraphic.spriteCounter = 0;		// reset counter
 		}
 		
 		// INVINCIBLE TIME
