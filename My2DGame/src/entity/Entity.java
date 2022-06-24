@@ -38,6 +38,7 @@ public abstract class Entity {	// parent class for every entity in the game
 	
 	public void setEntityGraphic(EntityGraphic entityGraphic) {
 		this.entityGraphic = entityGraphic;
+		setImage();
 	}
 	
 	public void setAction() {

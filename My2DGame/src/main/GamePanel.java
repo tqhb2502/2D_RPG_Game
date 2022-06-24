@@ -78,7 +78,6 @@ public class GamePanel extends JPanel implements Runnable{
 	// pre-setup for our game
 	public void setupGame() {
 		player.setEntityGraphic(new EntityGraphic(this, player));
-		player.setImage();
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
