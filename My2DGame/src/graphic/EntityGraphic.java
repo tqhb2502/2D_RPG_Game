@@ -5,11 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import entity.Entity;
-import main.GamePanel;
 import player.Player;
 
 public class EntityGraphic {
-	GamePanel gp;
+	
 	Entity entity;
 	
 	public int screenX, screenY;
@@ -24,23 +23,22 @@ public class EntityGraphic {
 	public int standCounter = 0;	// the number of frames that the entity stands still
 	
 	// CONSTRUCTOR
-	public EntityGraphic(GamePanel gp, Entity entity) {
-		this.gp = gp;
+	public EntityGraphic(Entity entity) {
 		this.entity = entity;
 		
 		if (entity instanceof Player) {
-			screenX = (gp.screenWidth / 2) - (gp.tileSize / 2);	
-			screenY = (gp.screenHeight / 2) - (gp.tileSize / 2);
+			screenX = (entity.gp.screenWidth / 2) - (entity.gp.tileSize / 2);	
+			screenY = (entity.gp.screenHeight / 2) - (entity.gp.tileSize / 2);
 		}
 	}
 	
 	public void draw(Graphics2D g2) {
 		
 		// only draw entity within screen's range around player
-		if (entity.worldX > gp.player.worldX - gp.player.entityGraphic.screenX - gp.tileSize
-				&& entity.worldX < gp.player.worldX + gp.player.entityGraphic.screenX + gp.tileSize
-				&& entity.worldY > gp.player.worldY - gp.player.entityGraphic.screenY - gp.tileSize
-				&& entity.worldY < gp.player.worldY + gp.player.entityGraphic.screenY + gp.tileSize) {
+		if (entity.worldX > entity.gp.player.worldX - entity.gp.player.entityGraphic.screenX - entity.gp.tileSize
+				&& entity.worldX < entity.gp.player.worldX + entity.gp.player.entityGraphic.screenX + entity.gp.tileSize
+				&& entity.worldY > entity.gp.player.worldY - entity.gp.player.entityGraphic.screenY - entity.gp.tileSize
+				&& entity.worldY < entity.gp.player.worldY + entity.gp.player.entityGraphic.screenY + entity.gp.tileSize) {
 				
 			// GET IMAGE
 			switch(entity.direction) {
@@ -87,8 +85,8 @@ public class EntityGraphic {
 			}
 			
 			// POSITION ON SCREEN
-			screenX = entity.worldX - gp.player.worldX + gp.player.entityGraphic.screenX;
-			screenY = entity.worldY - gp.player.worldY + gp.player.entityGraphic.screenY;
+			screenX = entity.worldX - entity.gp.player.worldX + entity.gp.player.entityGraphic.screenX;
+			screenY = entity.worldY - entity.gp.player.worldY + entity.gp.player.entityGraphic.screenY;
 			
 			// INVINCIBLE VISUAL EFFECT
 			if (entity.invincible == true) {
@@ -98,21 +96,21 @@ public class EntityGraphic {
 			// DRAW
 			if (entity.attacking == false) {
 				
-				g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+				g2.drawImage(image, screenX, screenY, entity.gp.tileSize, entity.gp.tileSize, null);
 			} else {
 				
 				switch (entity.direction) {
 				case "up":
-					g2.drawImage(image, screenX, screenY - gp.tileSize, gp.tileSize, gp.tileSize * 2, null);
+					g2.drawImage(image, screenX, screenY - entity.gp.tileSize, entity.gp.tileSize, entity.gp.tileSize * 2, null);
 					break;
 				case "down":
-					g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize * 2, null);
+					g2.drawImage(image, screenX, screenY, entity.gp.tileSize, entity.gp.tileSize * 2, null);
 					break;
 				case "left":
-					g2.drawImage(image, screenX - gp.tileSize, screenY, gp.tileSize * 2, gp.tileSize, null);
+					g2.drawImage(image, screenX - entity.gp.tileSize, screenY, entity.gp.tileSize * 2, entity.gp.tileSize, null);
 					break;
 				case "right":
-					g2.drawImage(image, screenX, screenY, gp.tileSize * 2, gp.tileSize, null);
+					g2.drawImage(image, screenX, screenY, entity.gp.tileSize * 2, entity.gp.tileSize, null);
 					break;
 				}
 			}

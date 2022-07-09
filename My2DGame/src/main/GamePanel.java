@@ -12,8 +12,10 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import graphic.EntityGraphic;
+import graphic.MapGraphic;
+import map.Map;
+import map.MapLoader;
 import player.Player;
-import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable{
 	// SCREEN SETTINGS
@@ -34,7 +36,6 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 60;
 	
 	// SYSTEM
-	public TileManager tileM = new TileManager(this);
 	public KeyHandler keyH = new KeyHandler(this);
 	Sound music = new Sound();
 	Sound se = new Sound();
@@ -46,6 +47,9 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// UI
 	public UI ui = new UI(this);
+	
+	// MAP
+	Map map = new Map(this);
 	
 	// ENTITY
 	public Player player = new Player(this, keyH);
@@ -77,10 +81,18 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	// pre-setup for our game
 	public void setupGame() {
-		player.setEntityGraphic(new EntityGraphic(this, player));
+		// map
+		map.setMapGraphic(new MapGraphic(map));
+		map.setMapLoader(new MapLoader(map));
+		map.mapLoader.loadMap("/maps/world01.txt");
+		
+		// entity
+		player.setEntityGraphic(new EntityGraphic(player));
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
+		
+		// game state
 		gameState = titleState;
 	}
 	
@@ -186,7 +198,7 @@ public class GamePanel extends JPanel implements Runnable{
 			ui.draw(g2);
 		} else {
 			// TILES
-			tileM.draw(g2);		// make sure to draw tile before player, otherwise, we can not see player
+			map.mapGraphic.draw(g2); // make sure to draw tile before player, otherwise, we can not see player
 			
 			// ADD ENTITIES TO ARRAY
 			// player

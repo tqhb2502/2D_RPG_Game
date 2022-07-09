@@ -30,28 +30,28 @@ public class CollisionChecker {
 		switch (entity.direction) {
 		case "up":
 			entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-			tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
-			tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
+			tileNum1 = gp.map.data[entityLeftCol][entityTopRow];
+			tileNum2 = gp.map.data[entityRightCol][entityTopRow];
 			break;
 		case "down":
 			entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
-			tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
-			tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
+			tileNum1 = gp.map.data[entityLeftCol][entityBottomRow];
+			tileNum2 = gp.map.data[entityRightCol][entityBottomRow];
 			break;
 		case "left":
 			entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
-			tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
-			tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
+			tileNum1 = gp.map.data[entityLeftCol][entityTopRow];
+			tileNum2 = gp.map.data[entityLeftCol][entityBottomRow];
 			break;
 		case "right":
 			entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
-			tileNum1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
-			tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
+			tileNum1 = gp.map.data[entityRightCol][entityTopRow];
+			tileNum2 = gp.map.data[entityRightCol][entityBottomRow];
 			break;
 		}
 		
 		// if either tile is unpassable, turn collision to ON.
-		if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
+		if (gp.map.tile[tileNum1].collision == true || gp.map.tile[tileNum2].collision == true) {
 			entity.collisionOn = true;
 		}
 	}
