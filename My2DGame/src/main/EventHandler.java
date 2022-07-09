@@ -44,7 +44,6 @@ public class EventHandler {
 		if (canTouchEvent == true) {
 		
 			if (hit(26, 16, "right") == true) { damagePit(26, 16, gp.dialogueState); }
-			if (hit(23, 19, "any") == true) { damagePit(23, 19, gp.dialogueState); }
 			if (hit(23, 7, "up") == true) { healingPool(23, 7, gp.dialogueState); }
 			if (hit(40, 7, "any") == true) { teleportPortal(40, 7, gp.dialogueState); }
 		}

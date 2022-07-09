@@ -18,7 +18,7 @@ public class Map {
 	
 	public Map(GamePanel gp) {
 		this.gp = gp;
-		tile = new Tile[6];
+		tile = new Tile[7];
 		data = new int[gp.maxWorldCol][gp.maxWorldRow];
 		
 		try {
@@ -42,6 +42,9 @@ public class Map {
 			
 			tile[5] = new Tile();
 			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
+			
+			tile[6] = new Tile();
+			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.png"));
 			
 		} catch(IOException e) {
 			e.printStackTrace();
