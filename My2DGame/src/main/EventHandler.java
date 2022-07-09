@@ -53,7 +53,7 @@ public class EventHandler {
 		
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "You fell into a pit!";
-		gp.player.life--;
+		gp.player.currentHP--;
 //		eventRect[col][row].eventDone = true;
 		canTouchEvent = false;
 	}
@@ -62,7 +62,7 @@ public class EventHandler {
 		
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "You are drinking the water.\nYour life has been recovered!";
-		gp.player.life = gp.player.maxLife;
+		gp.player.currentHP = gp.player.maxHP;
 		canTouchEvent = false;
 	}
 	

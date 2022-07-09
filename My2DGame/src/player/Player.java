@@ -22,8 +22,8 @@ public class Player extends Entity{
 		worldY = gp.tileSize * 21;
 		speed = 6;
 		direction = "down";
-		maxLife = 6;
-		life = maxLife; // 2 life = 1 heart
+		maxHP = 6;
+		currentHP = maxHP; // 2 life = 1 heart
 		
 		// SOLID AREA
 		solidArea.x = 8;
@@ -66,6 +66,9 @@ public class Player extends Entity{
 	}
 	
 	public void update() {
+		
+		// CHECK HP
+		
 		
 		// INTERACT KEYS
 		if (keyH.enterPressed == true) {
@@ -251,7 +254,7 @@ public class Player extends Entity{
 		if (index != 999) {
 			
 			if (invincible == false) {
-				life--;
+				currentHP--;
 				invincible = true;
 			}
 		}
@@ -264,10 +267,10 @@ public class Player extends Entity{
 			
 			if (gp.monster[index].invincible == false) {
 				
-				gp.monster[index].life -= 1;
+				gp.monster[index].currentHP -= 1;
 				gp.monster[index].invincible = true;
 				
-				if (gp.monster[index].life <= 0) {
+				if (gp.monster[index].currentHP <= 0) {
 					gp.monster[index] = null;
 				}
 			}

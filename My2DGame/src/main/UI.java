@@ -6,37 +6,30 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import entity.Entity;
+import graphic.EntityGraphic;
 import item.Heart;
 
 public class UI {
+	
 	GamePanel gp;
 	Graphics2D g2;
 	
 	public int commandNum = 0;
 	
-	BufferedImage heart_full, heart_half, heart_blank; // store heart
-	
-	Boolean messageOn = false;		// used to display notification message
-	String message = "";
-	int messageCounter = 0;
-	
 	public String currentDialogue;
 	
 	public Boolean gameFinished = false;	// the game is finished or not yet
 	
+	BufferedImage heart_full, heart_half, heart_blank;
+	
 	public UI(GamePanel gp) {
 		this.gp = gp;
 		
-//		Entity heart = new Heart(gp, gp.eGraphic);
-//		heart_full = heart.entityGraphic.image;
-//		heart_half = heart.entityGraphic.image2;
-//		heart_blank = heart.entityGraphic.image3;
-	}
-	
-	public void showMessage(String text) {	// set the message to display
-		message = text;
-		messageOn = true;
+		Heart heart = new Heart(gp);
+		heart.setEntityGraphic(new EntityGraphic(heart));
+		heart_full = heart.entityGraphic.image;
+		heart_half = heart.entityGraphic.image2;
+		heart_blank = heart.entityGraphic.image3;
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -49,14 +42,13 @@ public class UI {
 		
 		// PLAY STATE
 		if (gp.gameState == gp.playState) {
-			// do play state stuff
-			//drawPlayerLife();
+			drawPlayerLife();
 		}
 		
 		// PAUSE STATE
 		if (gp.gameState == gp.pauseState) {
 			drawPauseScreen();
-			//drawPlayerLife();
+			drawPlayerLife();
 		}
 		
 		// DIALOGUE STATE
@@ -65,31 +57,31 @@ public class UI {
 		}
 	}
 	
-//	private void drawPlayerLife() {
-//		// DRAW MAX LIFE
-//		int x = gp.tileSize/2;
-//		int y = gp.tileSize/2;
-//		int i = 0;
-//		while (i < gp.player.maxLife/2) {
-//			g2.drawImage(heart_blank, x, y,gp.tileSize,gp.tileSize,null);
-//			i++;
-//			x+= gp.tileSize;
-//		}
-//		
-//		//	DRAW CURRENT LIFE
-//		x = gp.tileSize/2;
-//		y = gp.tileSize/2;
-//		i = 0;
-//		while (i < gp.player.life) {
-//			g2.drawImage(heart_half, x, y,gp.tileSize,gp.tileSize,null);
-//			i++;
-//			if(i<gp.player.life) {
-//				g2.drawImage(heart_full, x, y,gp.tileSize,gp.tileSize,null);
-//			}
-//			i++;
-//			x+= gp.tileSize;
-//		}
-//	}
+	private void drawPlayerLife() {
+		// DRAW MAX LIFE
+		int x = gp.tileSize/2;
+		int y = gp.tileSize/2;
+		int i = 0;
+		while (i < gp.player.maxHP/2) {
+			g2.drawImage(heart_blank, x, y,gp.tileSize,gp.tileSize,null);
+			i++;
+			x+= gp.tileSize;
+		}
+		
+		//	DRAW CURRENT LIFE
+		x = gp.tileSize/2;
+		y = gp.tileSize/2;
+		i = 0;
+		while (i < gp.player.currentHP) {
+			g2.drawImage(heart_half, x, y,gp.tileSize,gp.tileSize,null);
+			i++;
+			if(i<gp.player.currentHP) {
+				g2.drawImage(heart_full, x, y,gp.tileSize,gp.tileSize,null);
+			}
+			i++;
+			x+= gp.tileSize;
+		}
+	}
 
 	public void drawTitleScreen() {
 		// screen color

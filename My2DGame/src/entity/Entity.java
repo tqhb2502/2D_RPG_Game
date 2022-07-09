@@ -28,8 +28,8 @@ public abstract class Entity {	// parent class for every entity in the game
 	public Rectangle attackArea = new Rectangle(0, 0, 0, 0);	// damage area when attacking
     
 	// entity status
-	public int maxLife;
-	public int life;
+	public int maxHP;
+	public int currentHP;
 	
 	// CONSTRUCTOR
 	public Entity(GamePanel gp) {
@@ -68,7 +68,7 @@ public abstract class Entity {	// parent class for every entity in the game
 		if (this.type == 3 && contactPlayer == true) {
 			
 			if (gp.player.invincible == false) {
-				gp.player.life -= 1;
+				gp.player.currentHP -= 1;
 				gp.player.invincible = true;
 			}
 		}

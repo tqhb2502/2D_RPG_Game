@@ -17,8 +17,8 @@ public class GreenSlime extends Entity{
 		// INFO
 		name = "Green Slime";
 		speed = 1;
-		maxLife = 4;
-		life = maxLife;
+		maxHP = 4;
+		currentHP = maxHP;
 		type = 3;
 		
 		// SOLID AREA
