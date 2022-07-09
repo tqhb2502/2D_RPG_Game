@@ -15,6 +15,7 @@ public abstract class Entity {	// parent class for every entity in the game
 	public int speed;
 	public String direction = "none";	// the direction of entity
 	public boolean attacking = false;
+	public boolean alive = false;
 	
 	public int actionLockCounter = 0;	// entity can not do a specific action until counter counts to certain number
 	
@@ -30,6 +31,13 @@ public abstract class Entity {	// parent class for every entity in the game
 	// entity status
 	public int maxHP;
 	public int currentHP;
+	public int projectileAttack = 0;
+	public int maxMP;
+	public int currentMP;
+	public int normalAttack;
+	public int mpCost;
+	public Projectile projectile;
+	public int shotAvailableCounter = 0;
 	
 	// CONSTRUCTOR
 	public Entity(GamePanel gp) {

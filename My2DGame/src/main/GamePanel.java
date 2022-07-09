@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// so we can sort them in order of y coordinate
 	// and draw them one by one to avoid unnatural overriding images
 	ArrayList<Entity> entityList = new ArrayList<>();
+	public ArrayList<Entity> projectileList =  new ArrayList<>();
 	
 	// GAME STATE
 	// determine which state the game is: the game is being played, the game is paused,...
@@ -188,6 +189,16 @@ public class GamePanel extends JPanel implements Runnable{
 					monster[i].update();
 				}
 			}
+			
+			// PROJECTILE
+			for (int i = 0; i < projectileList.size(); i++) {
+				if (projectileList.get(i) != null) {
+					if(projectileList.get(i).alive == true )
+						projectileList.get(i).update();
+					if(projectileList.get(i).alive == false)
+						projectileList.remove(i);
+				}
+			}
 		}
 	}
 	
@@ -220,6 +231,12 @@ public class GamePanel extends JPanel implements Runnable{
 			for (int i = 0; i < monster.length; i++) {
 				if (monster[i] != null) {
 					entityList.add(monster[i]);
+				}
+			}
+			// projectile
+			for (int i = 0; i < projectileList.size(); i++) {
+				if (projectileList.get(i) != null) {
+					entityList.add(projectileList.get(i));
 				}
 			}
 			

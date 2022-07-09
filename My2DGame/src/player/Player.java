@@ -5,6 +5,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import entity.Entity;
+import graphic.EntityGraphic;
+import item.Fireball;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -32,6 +34,10 @@ public class Player extends Entity{
 		solidArea.height = 32;
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
+		
+		// PROJECTILE
+		projectile = new Fireball(gp);
+		projectile.setEntityGraphic(new EntityGraphic(projectile));
 		
 		// ATTACK AREA
 		attackArea.width = 36;
@@ -163,6 +169,18 @@ public class Player extends Entity{
 			}
 		}
 		
+		// PROJECTILE
+		if (gp.keyH.shotPressed == true && projectile.alive == false && shotAvailableCounter == 30) {
+			projectile.set(worldX, worldY, direction, true, this);
+			gp.projectileList.add(projectile);
+			gp.playSE(5);
+			shotAvailableCounter = 0;
+		}
+		
+		if (shotAvailableCounter < 30) {
+			shotAvailableCounter++;
+		}
+		
 		// INVINCIBLE TIME
 		if (invincible == true) {
 			
@@ -206,7 +224,7 @@ public class Player extends Entity{
 			
 			// check collision between player's attackArea and monster's solidArea
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-			damageMonster(monsterIndex);
+			damageMonster(monsterIndex, 1);
 			
 			// restore player's worldX, worldY and solidArea
 			worldX = currentWorldX;
@@ -261,13 +279,13 @@ public class Player extends Entity{
 	}
 	
 	// give damage to monster
-	public void damageMonster(int index) {
+	public void damageMonster(int index, int attack) {
 		
 		if (index != 999) {
 			
 			if (gp.monster[index].invincible == false) {
 				
-				gp.monster[index].currentHP -= 1;
+				gp.monster[index].currentHP -= attack;
 				gp.monster[index].invincible = true;
 				
 				if (gp.monster[index].currentHP <= 0) {
