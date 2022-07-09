@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import graphic.EntityGraphic;
 import main.GamePanel;
+import projectile.Projectile;
 
 public abstract class Entity {	// parent class for every entity in the game
 	public GamePanel gp;

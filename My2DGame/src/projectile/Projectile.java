@@ -1,5 +1,6 @@
-package entity;
+package projectile;
 
+import entity.Entity;
 import main.GamePanel;
 
 public class Projectile extends Entity {

@@ -6,9 +6,9 @@ import javax.imageio.ImageIO;
 
 import entity.Entity;
 import graphic.EntityGraphic;
-import item.Fireball;
 import main.GamePanel;
 import main.KeyHandler;
+import projectile.Fireball;
 
 public class Player extends Entity{
 	

@@ -1,8 +1,7 @@
-package item;
+package projectile;
 
 import javax.imageio.ImageIO;
 
-import entity.Projectile;
 import main.GamePanel;
 
 public class Fireball extends Projectile {

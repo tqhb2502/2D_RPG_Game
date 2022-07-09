@@ -2,6 +2,7 @@ package main;
 
 import graphic.EntityGraphic;
 import item.Door;
+import monster.Dragon;
 import monster.GreenSlime;
 import npc.OldMan;
 
@@ -44,5 +45,15 @@ public class AssetSetter {
 		gp.monster[1].setEntityGraphic(new EntityGraphic(gp.monster[1]));
 		gp.monster[1].worldX = gp.tileSize * 21;
 		gp.monster[1].worldY = gp.tileSize * 22;
+		
+		gp.monster[2] = new Dragon(gp);
+		gp.monster[2].setEntityGraphic(new EntityGraphic(gp.monster[2]));
+		gp.monster[2].worldX = gp.tileSize * 26;
+		gp.monster[2].worldY = gp.tileSize * 22;
+		
+		gp.monster[3] = new Dragon(gp);
+		gp.monster[3].setEntityGraphic(new EntityGraphic(gp.monster[3]));
+		gp.monster[3].worldX = gp.tileSize * 29;
+		gp.monster[3].worldY = gp.tileSize * 22;
 	}
 }
