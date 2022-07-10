@@ -1,10 +1,14 @@
 package main;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import graphic.EntityGraphic;
 import item.Heart;
@@ -17,9 +21,6 @@ public class UI {
 	public int commandNum = 0;
 	
 	public String currentDialogue;
-	
-	public Boolean gameFinished = false;	// the game is finished or not yet
-	
 	BufferedImage heart_full, heart_half, heart_blank;
 	
 	public UI(GamePanel gp) {
@@ -54,6 +55,11 @@ public class UI {
 		// DIALOGUE STATE
 		if (gp.gameState == gp.dialogueState) {
 			drawDialogueScreen();
+		}
+		
+		// DEAD STATE
+		if (gp.gameState == gp.deadState) {
+			drawDeadScreen();
 		}
 	}
 	
@@ -90,7 +96,7 @@ public class UI {
 		
 		// title name
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 80F));
-		String text = "Blue Boy Adventure";
+		String text = "GROUP 9";
 		int x = getXForCenteredText(text);
 		int y = gp.tileSize * 3;
 		
@@ -105,7 +111,13 @@ public class UI {
 		// display character
 		x = gp.screenWidth / 2 - gp.tileSize;
 		y += gp.tileSize * 2;
-		g2.drawImage(gp.player.entityGraphic.down1, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+		BufferedImage blueBoyImage = null;
+		try {
+			blueBoyImage = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		g2.drawImage(blueBoyImage, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 		
 		// menu
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
@@ -136,15 +148,41 @@ public class UI {
 	}
 	
 	public void drawPauseScreen() {
+		
+		// screen
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6F));
+		g2.setColor(Color.gray);
+		g2.fillRect(0,  0,  gp.screenWidth, gp.screenHeight);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+		
+		// text
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
 		g2.setColor(Color.white);
 		
 		String text = "PAUSED";
-		
 		int x = getXForCenteredText(text);
 		int y = gp.screenHeight / 2;
-		
 		g2.drawString(text, x, y);
+		
+		// menu
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+		g2.setColor(Color.white);
+		
+		text = "Resume";
+		x = getXForCenteredText(text);
+		y += gp.tileSize * 2;
+		g2.drawString(text, x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x - gp.tileSize / 2, y);
+		}
+		
+		text = "Quit";
+		x = getXForCenteredText(text);
+		y += gp.tileSize;
+		g2.drawString(text, x, y);	
+		if (commandNum == 1) {
+			g2.drawString(">", x - gp.tileSize / 2, y);
+		}
 	}
 	
 	public void drawDialogueScreen() {
@@ -176,6 +214,47 @@ public class UI {
 		g2.setColor(c);
 		g2.setStroke(new BasicStroke(5));
 		g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+	}
+	
+	public void drawDeadScreen() {
+		
+		// screen
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6F));
+		g2.setColor(Color.gray);
+		g2.fillRect(0,  0,  gp.screenWidth, gp.screenHeight);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8F));
+		g2.setColor(Color.black);
+		g2.fillRect(0, gp.screenHeight / 2 - gp.tileSize, gp.screenWidth, gp.tileSize * 2);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+		
+		// text
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+		g2.setColor(Color.red);
+		
+		String text = "YOU DIED";
+		int x = getXForCenteredText(text);
+		int y = gp.screenHeight / 2 + 28;
+		g2.drawString(text, x, y);
+		
+		// menu
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+		g2.setColor(Color.white);
+		
+		text = "Retry";
+		x = getXForCenteredText(text);
+		y += gp.tileSize * 2;
+		g2.drawString(text, x, y);
+		if (commandNum == 0) {
+			g2.drawString(">", x - gp.tileSize / 2, y);
+		}
+		
+		text = "Quit";
+		x = getXForCenteredText(text);
+		y += gp.tileSize;
+		g2.drawString(text, x, y);	
+		if (commandNum == 1) {
+			g2.drawString(">", x - gp.tileSize / 2, y);
+		}
 	}
 	
 	public int getXForCenteredText(String text) {

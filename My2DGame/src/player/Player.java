@@ -20,8 +20,6 @@ public class Player extends Entity{
 		this.keyH = keyH;
 		
 		// INFO
-		worldX = gp.tileSize * 22;
-		worldY = gp.tileSize * 18;
 		speed = 6;
 		direction = "down";
 		maxHP = 6;
@@ -74,7 +72,11 @@ public class Player extends Entity{
 	public void update() {
 		
 		// CHECK HP
-		
+		if (currentHP <= 0) {
+			gp.stopMusic();
+			gp.ui.commandNum = 0;
+			gp.gameState = gp.deadState;
+		}
 		
 		// INTERACT KEYS
 		if (keyH.enterPressed == true) {

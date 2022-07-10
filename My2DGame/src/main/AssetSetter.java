@@ -1,16 +1,23 @@
 package main;
 
 import graphic.EntityGraphic;
-import item.Door;
 import monster.Dragon;
 import monster.GreenSlime;
 import npc.OldMan;
+import player.Player;
 
 public class AssetSetter {
 	GamePanel gp;
 	
 	public AssetSetter(GamePanel gp) {
 		this.gp = gp;
+	}
+	
+	public void setPlayer() {
+		gp.player = new Player(gp, gp.keyH);
+		gp.player.setEntityGraphic(new EntityGraphic(gp.player));
+		gp.player.worldX = gp.tileSize * 20;
+		gp.player.worldY = gp.tileSize * 21;
 	}
 	
 	public void setObject() {

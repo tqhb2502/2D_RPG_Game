@@ -11,7 +11,6 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import entity.Entity;
-import graphic.EntityGraphic;
 import graphic.MapGraphic;
 import map.Map;
 import map.MapLoader;
@@ -52,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Map map = new Map(this);
 	
 	// ENTITY
-	public Player player = new Player(this, keyH);
+	public Player player;
 	public Entity obj[] = new Entity[10];	// store displayed object, upto 10 objects
 	public Entity npc[] = new Entity[10];	// store displayed npc, upto 10 npcs
 	public Entity monster[] = new Entity[20];	// store displayed monster, upto 20 monsters
@@ -89,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable{
 		map.mapLoader.loadMap("/maps/world03.txt");
 		
 		// entity
-		player.setEntityGraphic(new EntityGraphic(player));
+		aSetter.setPlayer();
 		aSetter.setObject();
 		aSetter.setNPC();
 		aSetter.setMonster();
