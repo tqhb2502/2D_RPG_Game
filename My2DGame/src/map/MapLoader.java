@@ -23,7 +23,7 @@ public class MapLoader {
 			
 			while (row < map.gp.maxWorldRow) {
 				String line = br.readLine();	// read a single line in text file
-				String numbers[] = line.split(" ");		// split the string at a space
+				String numbers[] = line.split(",");		// split the string at a space
 				
 				while (col < map.gp.maxWorldCol) {
 					

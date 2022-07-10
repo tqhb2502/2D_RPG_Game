@@ -22,14 +22,12 @@ public class Dragon extends Entity{
 		speed = 1;
 		maxHP = 4;
 		currentHP = maxHP;
-		
 		type = 3;
 		normalAttack = 2;
+		
+		// PROJECTILE
 		projectile = new Rock(gp);
 		projectile.setEntityGraphic(new EntityGraphic(projectile));
-		
-		projectile.alive = false;
-		
 		
 		// SOLID AREA
 		solidArea.x = 3;
@@ -89,11 +87,6 @@ public class Dragon extends Entity{
 			projectile.set(worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
 			shotAvailableCounter = 0;
-			//System.out.println(shotAvailableCounter);
-			
 		}
-		
-			
 	}
-	
 }

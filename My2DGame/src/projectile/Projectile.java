@@ -29,7 +29,7 @@ public class Projectile extends Entity {
 		if(user == gp.player) {
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
 			if(monsterIndex != 999) {
-				gp.player.damageMonster(monsterIndex, super.projectileAttack);
+				gp.player.damageMonster(monsterIndex, projectileAttack);
 				alive = false; // trung la mat vien dan
 			}
 		}

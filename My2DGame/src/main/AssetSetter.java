@@ -13,17 +13,17 @@ public class AssetSetter {
 		this.gp = gp;
 	}
 	
-	public void setObject() {	// set objects that appear in map and their positions
+	public void setObject() {
 		
-		gp.obj[1] = new Door(gp);
-		gp.obj[1].setEntityGraphic(new EntityGraphic(gp.obj[1]));
-		gp.obj[1].worldX = gp.tileSize * 22;
-		gp.obj[1].worldY = gp.tileSize * 21;
-		
-		gp.obj[3] = new Door(gp);
-		gp.obj[3].setEntityGraphic(new EntityGraphic(gp.obj[3]));
-		gp.obj[3].worldX = gp.tileSize * 24;
-		gp.obj[3].worldY = gp.tileSize * 21;
+//		gp.obj[1] = new Door(gp);
+//		gp.obj[1].setEntityGraphic(new EntityGraphic(gp.obj[1]));
+//		gp.obj[1].worldX = gp.tileSize * 22;
+//		gp.obj[1].worldY = gp.tileSize * 21;
+//		
+//		gp.obj[3] = new Door(gp);
+//		gp.obj[3].setEntityGraphic(new EntityGraphic(gp.obj[3]));
+//		gp.obj[3].worldX = gp.tileSize * 24;
+//		gp.obj[3].worldY = gp.tileSize * 21;
 	}
 	
 	public void setNPC() {

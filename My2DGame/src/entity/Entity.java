@@ -13,7 +13,10 @@ public abstract class Entity {	// parent class for every entity in the game
 	public int worldX, worldY;	// position of entity in world map
 	public String name;
 	public int type;	// 0 = player, 1 = object, 2 = NPC, 3 = monster
-	//moi
+	public final int type_player = 0;
+	public final int type_object = 1;
+	public final int type_NPC = 2;
+	public final int type_monster = 3;
 	
 	public int speed;
 	public String direction = "none";	// the direction of entity
@@ -41,12 +44,6 @@ public abstract class Entity {	// parent class for every entity in the game
 	public int mpCost;
 	public Projectile projectile;
 	public int shotAvailableCounter;
-	
-	//
-	public final int type_player = 0;
-	public final int type_object = 1;
-	public final int type_NPC = 2;
-	public final int type_monster = 3;
 	
 	// CONSTRUCTOR
 	public Entity(GamePanel gp) {
@@ -127,14 +124,17 @@ public abstract class Entity {	// parent class for every entity in the game
 			}
 			
 		}
+		
+		
 		if (shotAvailableCounter < 30) {
 			shotAvailableCounter++;
 		}
 	}
-		public void damagePlayer(int attack) {
-			if (gp.player.invincible == false) {
-				gp.player.currentHP -= attack;
-				gp.player.invincible = true;
-			}
+	
+	public void damagePlayer(int attack) {
+		if (gp.player.invincible == false) {
+			gp.player.currentHP -= attack;
+			gp.player.invincible = true;
 		}
+	}
 }

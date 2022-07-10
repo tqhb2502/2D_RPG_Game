@@ -20,8 +20,8 @@ public class Player extends Entity{
 		this.keyH = keyH;
 		
 		// INFO
-		worldX = gp.tileSize * 23;
-		worldY = gp.tileSize * 21;
+		worldX = gp.tileSize * 22;
+		worldY = gp.tileSize * 18;
 		speed = 6;
 		direction = "down";
 		maxHP = 6;
