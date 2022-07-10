@@ -11,9 +11,7 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 import entity.Entity;
-import graphic.MapGraphic;
 import map.Map;
-import map.MapLoader;
 import player.Player;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -48,7 +46,10 @@ public class GamePanel extends JPanel implements Runnable{
 	public UI ui = new UI(this);
 	
 	// MAP
-	Map map = new Map(this);
+	Map currentMap = new Map(this);
+	Map map1 = new Map(this);
+	Map map2 = new Map(this);
+	Map map3 = new Map(this);
 	
 	// ENTITY
 	public Player player;
@@ -83,9 +84,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// pre-setup for our game
 	public void setupGame() {
 		// map
-		map.setMapGraphic(new MapGraphic(map));
-		map.setMapLoader(new MapLoader(map));
-		map.mapLoader.loadMap("/maps/world01.txt");
+		aSetter.setMap();
 		
 		// entity
 		aSetter.setPlayer();
@@ -209,7 +208,7 @@ public class GamePanel extends JPanel implements Runnable{
 			ui.draw(g2);
 		} else {
 			// TILES
-			map.mapGraphic.draw(g2); // make sure to draw tile before player, otherwise, we can not see player
+			currentMap.mapGraphic.draw(g2); // make sure to draw tile before player, otherwise, we can not see player
 			
 			// ADD ENTITIES TO ARRAY
 			// player

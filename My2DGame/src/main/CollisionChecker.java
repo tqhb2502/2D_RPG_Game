@@ -9,41 +9,6 @@ public class CollisionChecker {
 		this.gp = gp;
 	}
 	
-	// WORLD BORDER
-	public void checkBorder(Entity entity) {
-		int entityLeftWorldX = entity.worldX + entity.solidArea.x;
-		int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
-		int entityTopWorldY = entity.worldY + entity.solidArea.y;
-		int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
-		
-		switch (entity.direction) {
-		case "up":
-			entityTopWorldY -= entity.speed;
-			if (entityTopWorldY < 0) {
-				entity.collisionOn = true;
-			}
-			break;
-		case "down":
-			entityBottomWorldY += entity.speed;
-			if (entityBottomWorldY > entity.gp.maxWorldRow * entity.gp.tileSize) {
-				entity.collisionOn = true;
-			}
-			break;
-		case "left":
-			entityLeftWorldX -= entity.speed;
-			if (entityLeftWorldX < 0) {
-				entity.collisionOn = true;
-			}
-			break;
-		case "right":
-			entityRightWorldX += entity.speed;
-			if (entityRightWorldX > entity.gp.maxWorldCol * entity.gp.tileSize) {
-				entity.collisionOn = true;
-			}
-			break;
-		}
-	}
-	
 	// ENTITY TO TILE
 	public void checkTile(Entity entity) {
 		
@@ -64,30 +29,48 @@ public class CollisionChecker {
 		// simulate entity's movement, find out where it is after the next move has been done
 		switch (entity.direction) {
 		case "up":
-			entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-			tileNum1 = gp.map.data[entityLeftCol][entityTopRow];
-			tileNum2 = gp.map.data[entityRightCol][entityTopRow];
+			if (entityTopWorldY - entity.speed < 0) {	// check top border
+				entity.collisionOn = true;
+			} else {
+				entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
+				tileNum1 = gp.currentMap.data[entityLeftCol][entityTopRow];
+				tileNum2 = gp.currentMap.data[entityRightCol][entityTopRow];
+			}
 			break;
 		case "down":
-			entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
-			tileNum1 = gp.map.data[entityLeftCol][entityBottomRow];
-			tileNum2 = gp.map.data[entityRightCol][entityBottomRow];
+			if (entityBottomWorldY + entity.speed >= gp.maxWorldRow * gp.tileSize) {	// check bottom border
+				entity.collisionOn = true;
+			} else {
+				entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
+				tileNum1 = gp.currentMap.data[entityLeftCol][entityBottomRow];
+				tileNum2 = gp.currentMap.data[entityRightCol][entityBottomRow];
+			}
 			break;
 		case "left":
-			entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
-			tileNum1 = gp.map.data[entityLeftCol][entityTopRow];
-			tileNum2 = gp.map.data[entityLeftCol][entityBottomRow];
+			if (entityLeftWorldX - entity.speed < 0) {	// check left border
+				entity.collisionOn = true;
+			} else {
+				entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
+				tileNum1 = gp.currentMap.data[entityLeftCol][entityTopRow];
+				tileNum2 = gp.currentMap.data[entityLeftCol][entityBottomRow];
+			}
 			break;
 		case "right":
-			entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
-			tileNum1 = gp.map.data[entityRightCol][entityTopRow];
-			tileNum2 = gp.map.data[entityRightCol][entityBottomRow];
+			if (entityRightWorldX + entity.speed >= gp.maxWorldCol * gp.tileSize) {	// check right border
+				entity.collisionOn = true;
+			} else {
+				entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
+				tileNum1 = gp.currentMap.data[entityRightCol][entityTopRow];
+				tileNum2 = gp.currentMap.data[entityRightCol][entityBottomRow];
+			}
 			break;
 		}
 		
 		// if either tile is unpassable, turn collision to ON.
-		if (gp.map.tile[tileNum1].collision == true || gp.map.tile[tileNum2].collision == true) {
-			entity.collisionOn = true;
+		if (entity.collisionOn == false) {
+			if (gp.currentMap.tile[tileNum1].collision == true || gp.currentMap.tile[tileNum2].collision == true) {
+				entity.collisionOn = true;
+			}
 		}
 	}
 	
@@ -97,11 +80,11 @@ public class CollisionChecker {
 		
 		for (int i = 0; i < gp.obj.length; i++) {
 			if (gp.obj[i] != null) {
-				// get entity solid area's position in world map
+				// get entity solid area's position in world currentMap
 				entity.solidArea.x = entity.worldX + entity.solidArea.x;
 				entity.solidArea.y = entity.worldY + entity.solidArea.y;
 				
-				// get object solid area's position in world map
+				// get object solid area's position in world currentMap
 				gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
 				gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
 				
@@ -149,11 +132,11 @@ public class CollisionChecker {
 		
 		for (int i = 0; i < target.length; i++) {
 			if (target[i] != null && target[i] != entity) {
-				// get THE CURRENT ENTITY solid area's position in world map
+				// get THE CURRENT ENTITY solid area's position in world currentMap
 				entity.solidArea.x = entity.worldX + entity.solidArea.x;
 				entity.solidArea.y = entity.worldY + entity.solidArea.y;
 				
-				// get entity solid area's position in world map
+				// get entity solid area's position in world currentMap
 				target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
 				target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
 				
@@ -196,11 +179,11 @@ public class CollisionChecker {
 		
 		boolean contactPlayer = false;
 		
-		// get entity solid area's position in world map
+		// get entity solid area's position in world currentMap
 		entity.solidArea.x = entity.worldX + entity.solidArea.x;
 		entity.solidArea.y = entity.worldY + entity.solidArea.y;
 		
-		// get player solid area's position in world map
+		// get player solid area's position in world currentMap
 		gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
 		gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
 		

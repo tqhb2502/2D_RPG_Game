@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import graphic.MapGraphic;
+import main.EventRect;
 import main.GamePanel;
 
 public class Map {
@@ -13,12 +14,12 @@ public class Map {
 	public MapGraphic mapGraphic;
 	public MapLoader mapLoader;
 	public Tile tile[];
-	
+	public EventRect eventRect[][];
 	public int data[][];
 	
 	public Map(GamePanel gp) {
 		this.gp = gp;
-		tile = new Tile[7];
+		tile = new Tile[8];
 		data = new int[gp.maxWorldCol][gp.maxWorldRow];
 		
 		try {
@@ -46,8 +47,26 @@ public class Map {
 			tile[6] = new Tile();
 			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/portal.png"));
 			
+			tile[7] = new Tile();
+			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/end_game_portal.png"));
 		} catch(IOException e) {
 			e.printStackTrace();
+		}
+		
+		eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
+		
+		for (int col = 0; col < gp.maxWorldCol; col++) {
+			
+			for (int row = 0; row < gp.maxWorldRow; row++) {
+				
+				eventRect[col][row] = new EventRect();
+				eventRect[col][row].x = 20;
+				eventRect[col][row].y = 20;
+				eventRect[col][row].width = 8;
+				eventRect[col][row].height = 8;
+				eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
+				eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
+			}
 		}
 	}
 	

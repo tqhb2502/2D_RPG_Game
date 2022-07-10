@@ -3,80 +3,69 @@ package main;
 public class EventHandler {
 	GamePanel gp;
 	
-	EventRect eventRect[][];
-	
-	int previousEventX, previousEventY;	// the x, y coordinates of the player when he hits a event tile
-	boolean canTouchEvent = true;	// determine event can be triggered or not
-	
 	public EventHandler(GamePanel gp) {
 		this.gp = gp;
-		
-		eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
-		
-		for (int col = 0; col < gp.maxWorldCol; col++) {
-			
-			for (int row = 0; row < gp.maxWorldRow; row++) {
-				
-				eventRect[col][row] = new EventRect();
-				eventRect[col][row].x = 20;
-				eventRect[col][row].y = 20;
-				eventRect[col][row].width = 8;
-				eventRect[col][row].height = 8;
-				eventRect[col][row].eventRectDefaultX = eventRect[col][row].x;
-				eventRect[col][row].eventRectDefaultY = eventRect[col][row].y;
-			}
-		}
 	}
 	
 	public void checkEvent() {
-		// if player is 1-tile-size away from the previous event tile,
-		// this event and other events can be triggered
-		if (canTouchEvent == false) {
+	
+		// map 1
+		if (gp.currentMap == gp.map1) {
 			
-			int xDistance = Math.abs(previousEventX - gp.player.worldX);
-			int yDistance = Math.abs(previousEventY - gp.player.worldY);
-			int distance = Math.max(xDistance, yDistance);
-			if (distance > gp.tileSize) {
-				canTouchEvent = true;
-			}
+			if (hitEvent(2, 49)) {teleportMap2(11, 1);}
+			if (hitEvent(47, 49)) {teleportMap3(34, 1);}
+			if (hitEvent(47, 0)) {endGame();}
 		}
 		
-		if (canTouchEvent == true) {
+		// map 2
+		else if (gp.currentMap == gp.map2) {
+			
+			if (hitEvent(11, 0)) {teleportMap1(2, 48);}
+		}
 		
-			if (hit(26, 16, "right") == true) { damagePit(26, 16, gp.dialogueState); }
-			if (hit(23, 7, "up") == true) { healingPool(23, 7, gp.dialogueState); }
-			if (hit(40, 7, "any") == true) { teleportPortal(40, 7, gp.dialogueState); }
+		// map 3
+		else if (gp.currentMap == gp.map3) {
+			
+			if (hitEvent(34, 0)) {teleportMap1(47, 48);}
 		}
 	}
 	
-	public void damagePit(int col, int row, int gameState) {
+	public void teleportMap1(int col, int row) {
+		gp.currentMap = gp.map1;
+		gp.player.worldX = gp.tileSize * col;
+		gp.player.worldY = gp.tileSize * row;
 		
-		gp.gameState = gameState;
-		gp.ui.currentDialogue = "You fell into a pit!";
-		gp.player.currentHP--;
-//		eventRect[col][row].eventDone = true;
-		canTouchEvent = false;
+		gp.aSetter.setObject();
+		gp.aSetter.setNPC();
+		gp.aSetter.setMonster();
 	}
 	
-	public void healingPool(int col, int row, int gameState) {
+	public void teleportMap2(int col, int row) {
+		gp.currentMap = gp.map2;
+		gp.player.worldX = gp.tileSize * col;
+		gp.player.worldY = gp.tileSize * row;
 		
-		gp.gameState = gameState;
-		gp.ui.currentDialogue = "You are drinking the water.\nYour life has been recovered!";
-		gp.player.currentHP = gp.player.maxHP;
-		gp.player.currentMP = gp.player.maxMP;
-		canTouchEvent = false;
+		gp.aSetter.setObject();
+		gp.aSetter.setNPC();
+		gp.aSetter.setMonster();
 	}
 	
-	public void teleportPortal(int col, int row, int gameState) {
+	public void teleportMap3(int col, int row) {
+		gp.currentMap = gp.map3;
+		gp.player.worldX = gp.tileSize * col;
+		gp.player.worldY = gp.tileSize * row;
 		
-		gp.gameState = gameState;
-		gp.ui.currentDialogue = "Teleport!";
-		gp.player.worldX = gp.tileSize * 23;
-		gp.player.worldY = gp.tileSize * 21;
+		gp.aSetter.setObject();
+		gp.aSetter.setNPC();
+		gp.aSetter.setMonster();
+	}
+	
+	public void endGame() {
+		
 	}
 	
 	// check if player hit event tile
-	public boolean hit(int col, int row, String requireDirection) {
+	public boolean hitEvent(int col, int row) {
 		boolean hit = false;
 		
 		// PLAYER POSITION
@@ -84,26 +73,20 @@ public class EventHandler {
 		gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
 		
 		// EVENT TILE POSITION
-		eventRect[col][row].x = col * gp.tileSize + eventRect[col][row].x;
-		eventRect[col][row].y = row * gp.tileSize + eventRect[col][row].y;
+		gp.currentMap.eventRect[col][row].x = col * gp.tileSize + gp.currentMap.eventRect[col][row].x;
+		gp.currentMap.eventRect[col][row].y = row * gp.tileSize + gp.currentMap.eventRect[col][row].y;
 		
-		if (gp.player.solidArea.intersects(eventRect[col][row]) == true
-				&& eventRect[col][row].eventDone == false) {
+		if (gp.player.solidArea.intersects(gp.currentMap.eventRect[col][row]) == true 
+			&& gp.currentMap.eventRect[col][row].eventDone == false) {
 			
-			// event occurs only when player has certain direction or any direction
-			if (gp.player.direction.contentEquals(requireDirection) || requireDirection.contentEquals("any")) {
-				hit = true;
-				
-				previousEventX = gp.player.worldX;
-				previousEventY = gp.player.worldY;
-			}
+			hit = true;
 		}
 		
 		// RESET
 		gp.player.solidArea.x = gp.player.solidAreaDefaultX;
 		gp.player.solidArea.y = gp.player.solidAreaDefaultY;
-		eventRect[col][row].x = eventRect[col][row].eventRectDefaultX;
-		eventRect[col][row].y = eventRect[col][row].eventRectDefaultY;
+		gp.currentMap.eventRect[col][row].x = gp.currentMap.eventRect[col][row].eventRectDefaultX;
+		gp.currentMap.eventRect[col][row].y = gp.currentMap.eventRect[col][row].eventRectDefaultY;
 		
 		return hit;
 	}

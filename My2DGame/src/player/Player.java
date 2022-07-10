@@ -118,8 +118,6 @@ public class Player extends Entity{
 			
 			// COLLISION
 			collisionOn = false;	// reset collision status
-			// world border
-			gp.cChecker.checkBorder(this);
 			// tile
 			gp.cChecker.checkTile(this);
 			// object
