@@ -27,6 +27,8 @@ public abstract class Entity { // parent class for every entity in the game
 
 	public boolean invincible = false; // can receive damage from monsters or not
 	public int invincibleCounter = 0; // amount of invincible time
+	
+	public int mpRecoverCounter = 0;	// when this counter counts to a specified number, MP is recovered
 
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // the solid area of entity, if it hit a tile that is not
 																// passable, entity can not move

@@ -48,16 +48,13 @@ public class GamePanel extends JPanel implements Runnable{
 	public UI ui = new UI(this);
 	
 	// MAP
-	public Map currentMap = new Map(this);
-	Map map1 = new Map(this);
-	Map map2 = new Map(this);
-	Map map3 = new Map(this);
+	public Map currentMap, map1, map2, map3;
 	
 	// ENTITY
 	public Player player;
-	public Entity obj[] = new Entity[10];	// store displayed object, upto 10 objects
-	public Entity npc[] = new Entity[10];	// store displayed npc, upto 10 npcs
-	public Entity monster[] = new Entity[20];	// store displayed monster, upto 20 monsters
+	public Entity obj[];	// store displayed object
+	public Entity npc[];	// store displayed npc
+	public Entity monster[];	// store displayed monster
 	// a array to store all entities in the game
 	// so we can sort them in order of y coordinate
 	// and draw them one by one to avoid unnatural overriding images
@@ -192,10 +189,12 @@ public class GamePanel extends JPanel implements Runnable{
 			
 			// PROJECTILE
 			for (int i = 0; i < projectileList.size(); i++) {
+				
 				if (projectileList.get(i) != null) {
-					if(projectileList.get(i).alive == true )
+					
+					if (projectileList.get(i).alive == true )
 						projectileList.get(i).update();
-					if(projectileList.get(i).alive == false)
+					if (projectileList.get(i).alive == false)
 						projectileList.remove(i);
 				}
 			}

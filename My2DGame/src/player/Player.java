@@ -80,6 +80,18 @@ public class Player extends Entity{
 			gp.gameState = gp.deadState;
 		}
 		
+		// RECOVER MP
+		if (currentMP < maxMP) {
+			
+			mpRecoverCounter++;
+			
+			if (mpRecoverCounter == 120) {
+				
+				currentMP++;
+				mpRecoverCounter = 0;
+			}
+		}
+		
 		// INTERACT KEYS
 		if (keyH.enterPressed == true) {
 			
@@ -97,7 +109,6 @@ public class Player extends Entity{
 		if (attacking == true) {
 			attacking();
 		}
-		
 		// MOVEMENT KEYS
 		else if (keyH.upPressed == true || keyH.downPressed == true || 
 				keyH.leftPressed == true || keyH.rightPressed == true) {
@@ -119,7 +130,8 @@ public class Player extends Entity{
 			// COLLISION
 			collisionOn = false;	// reset collision status
 			// tile
-			gp.cChecker.checkTile(this);
+			boolean isWater = gp.cChecker.checkTile(this);
+			if (isWater == true) { drinkWater(); }
 			// object
 			int objectIndex = gp.cChecker.checkObject(this);
 			pickUpObject(objectIndex);
@@ -297,5 +309,10 @@ public class Player extends Entity{
 				}
 			}
 		}
+	}
+	
+	// drink water to heal
+	public void drinkWater() {
+		currentHP = maxHP;
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import entity.Entity;
 import graphic.MapGraphic;
 import main.EventRect;
 import main.GamePanel;
@@ -11,17 +12,27 @@ import main.GamePanel;
 public class Map {
 	
 	public GamePanel gp;
+	
 	public MapGraphic mapGraphic;
 	public MapLoader mapLoader;
+	
 	public Tile tile[];
 	public EventRect eventRect[][];
+	public Entity obj[];
+	public Entity npc[];
+	public Entity monster[];
+	
 	public int data[][];
 	
 	public Map(GamePanel gp) {
 		this.gp = gp;
 		tile = new Tile[8];
+		obj = new Entity[10];
+		npc = new Entity[10];
+		monster = new Entity[10];
 		data = new int[gp.maxWorldCol][gp.maxWorldRow];
 		
+		// tile
 		try {
 			tile[0] = new Tile();
 			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
@@ -53,6 +64,7 @@ public class Map {
 			e.printStackTrace();
 		}
 		
+		// event rectangle
 		eventRect = new EventRect[gp.maxWorldCol][gp.maxWorldRow];
 		
 		for (int col = 0; col < gp.maxWorldCol; col++) {

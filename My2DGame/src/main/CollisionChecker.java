@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import player.Player;
 
 public class CollisionChecker {
 	GamePanel gp;
@@ -10,7 +11,9 @@ public class CollisionChecker {
 	}
 	
 	// ENTITY TO TILE
-	public void checkTile(Entity entity) {
+	public boolean checkTile(Entity entity) {
+		
+		boolean isWater = false;
 		
 		// find out the position of entity's solid area
 		int entityLeftWorldX = entity.worldX + entity.solidArea.x;
@@ -70,8 +73,12 @@ public class CollisionChecker {
 		if (entity.collisionOn == false) {
 			if (gp.currentMap.tile[tileNum1].collision == true || gp.currentMap.tile[tileNum2].collision == true) {
 				entity.collisionOn = true;
+				
+				if (tileNum1 == 2 || tileNum2 == 2) isWater = true;
 			}
 		}
+		
+		return isWater;
 	}
 	
 	// ENTITY TO OBJECT
