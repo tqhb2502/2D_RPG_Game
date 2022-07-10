@@ -20,6 +20,10 @@ public class GreenSlime extends Entity{
 		maxHP = 4;
 		currentHP = maxHP;
 		type = 3;
+		normalAttack = 1;
+		
+		
+		
 		
 		// SOLID AREA
 		solidArea.x = 3;

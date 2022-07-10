@@ -1,11 +1,13 @@
 package projectile;
 
 import entity.Entity;
+import graphic.EntityGraphic;
 import main.GamePanel;
 
 public class Projectile extends Entity {
 	
 	Entity user;
+
 	
 	public Projectile(GamePanel gp) {
 		super(gp);
@@ -31,8 +33,12 @@ public class Projectile extends Entity {
 				alive = false; // trung la mat vien dan
 			}
 		}
-		else {
-			
+		else{
+			boolean contactPlayer = gp.cChecker.checkPlayer(this);
+			if(gp.player.invincible == false && contactPlayer == true) {
+				damagePlayer(projectileAttack);
+				alive = false;
+			}
 		}
 		
 		// DIRECTION

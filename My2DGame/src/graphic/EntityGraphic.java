@@ -31,6 +31,9 @@ public class EntityGraphic {
 			screenY = (entity.gp.screenHeight / 2) - (entity.gp.tileSize / 2);
 		}
 	}
+	public EntityGraphic() {
+		
+	}
 	
 	public void draw(Graphics2D g2) {
 		

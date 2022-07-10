@@ -6,7 +6,10 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import entity.Entity;
+import graphic.EntityGraphic;
 import main.GamePanel;
+import projectile.Fireball;
+import projectile.Rock;
 
 public class Dragon extends Entity{
 
@@ -19,7 +22,14 @@ public class Dragon extends Entity{
 		speed = 1;
 		maxHP = 4;
 		currentHP = maxHP;
-		type = 4;
+		
+		type = 3;
+		normalAttack = 2;
+		projectile = new Rock(gp);
+		projectile.setEntityGraphic(new EntityGraphic(projectile));
+		
+		projectile.alive = false;
+		
 		
 		// SOLID AREA
 		solidArea.x = 3;
@@ -45,12 +55,13 @@ public class Dragon extends Entity{
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setAction() {
 		
 		if (actionLockCounter == 0) {
 			
 			Random random = new Random();
+			
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
 			
 			if (i <= 25) {
@@ -71,65 +82,18 @@ public class Dragon extends Entity{
 			
 			actionLockCounter = 120;
 		}
-		
 		actionLockCounter--;
+		
+		int i = new Random().nextInt(100) + 1;
+		if ( i>=99 && projectile.alive == false && shotAvailableCounter == 30) {
+			projectile.set(worldX, worldY, direction, true, this);
+			gp.projectileList.add(projectile);
+			shotAvailableCounter = 0;
+			//System.out.println(shotAvailableCounter);
+			
+		}
+		
+			
 	}
 	
-	public void update() {
-		// DIRECTION
-		setAction();
-		
-		// COLLISION
-		collisionOn = false;
-		// player
-		boolean contactPlayer = gp.cChecker.checkPlayer(this);
-		if (contactPlayer == true) {
-			
-			if (gp.player.invincible == false) {
-				gp.player.currentHP -= 1;
-				gp.player.invincible = true;
-			}
-		}
-		
-		// MOVEMENT
-		if (collisionOn == false) {
-			switch (direction) {
-			case "up":
-				worldY -= speed;	// update position
-				break;
-			case "down":
-				worldY += speed;
-				break;
-			case "left":
-				worldX -= speed;
-				break;
-			case "right":
-				worldX += speed;
-				break;
-			}
-		}
-		
-		// SWITCH SPRITE
-		this.entityGraphic.spriteCounter++;
-		if (this.entityGraphic.spriteCounter > 10) {
-			if (this.entityGraphic.spriteNum == 1) {	// change the image
-				this.entityGraphic.spriteNum = 2;
-			} else {
-				this.entityGraphic.spriteNum = 1;
-			}
-			
-			this.entityGraphic.spriteCounter = 0;		// reset counter
-		}
-		
-		// INVINCIBLE TIME
-		if (invincible == true) {
-			
-			invincibleCounter++;
-			
-			if (invincibleCounter == 60) {
-				invincible = false;
-				invincibleCounter = 0;
-			}
-		}
-	}
 }

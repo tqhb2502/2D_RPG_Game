@@ -1,13 +1,4 @@
-/entity/
-/graphic/
-/item/
-/main/
-/map/
-/maps/
-/monster/
-/npc/
-/objects/
-/player/
-/sound/
-/tiles/
 /projectile/
+/graphic/
+/entity/
+/monster/

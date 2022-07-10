@@ -224,6 +224,7 @@ public class Player extends Entity{
 			
 			// check collision between player's attackArea and monster's solidArea
 			int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+			
 			damageMonster(monsterIndex, 1);
 			
 			// restore player's worldX, worldY and solidArea
@@ -271,10 +272,7 @@ public class Player extends Entity{
 		
 		if (index != 999) {
 			
-			if (invincible == false) {
-				currentHP--;
-				invincible = true;
-			}
+			damagePlayer(gp.monster[index].normalAttack);
 		}
 	}
 	

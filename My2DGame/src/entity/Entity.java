@@ -13,10 +13,12 @@ public abstract class Entity {	// parent class for every entity in the game
 	public int worldX, worldY;	// position of entity in world map
 	public String name;
 	public int type;	// 0 = player, 1 = object, 2 = NPC, 3 = monster
+	//moi
+	
 	public int speed;
 	public String direction = "none";	// the direction of entity
 	public boolean attacking = false;
-	public boolean alive = false;
+	public boolean alive;
 	
 	public int actionLockCounter = 0;	// entity can not do a specific action until counter counts to certain number
 	
@@ -38,7 +40,13 @@ public abstract class Entity {	// parent class for every entity in the game
 	public int normalAttack;
 	public int mpCost;
 	public Projectile projectile;
-	public int shotAvailableCounter = 0;
+	public int shotAvailableCounter;
+	
+	//
+	public final int type_player = 0;
+	public final int type_object = 1;
+	public final int type_NPC = 2;
+	public final int type_monster = 3;
 	
 	// CONSTRUCTOR
 	public Entity(GamePanel gp) {
@@ -74,12 +82,8 @@ public abstract class Entity {	// parent class for every entity in the game
 		gp.cChecker.checkEntity(this, gp.monster);
 		// player
 		boolean contactPlayer = gp.cChecker.checkPlayer(this);
-		if (this.type == 3 && contactPlayer == true) {
-			
-			if (gp.player.invincible == false) {
-				gp.player.currentHP -= 1;
-				gp.player.invincible = true;
-			}
+		if (this.type == type_monster && contactPlayer == true) {
+			damagePlayer(normalAttack);
 		}
 		
 		// MOVEMENT
@@ -121,6 +125,16 @@ public abstract class Entity {	// parent class for every entity in the game
 				invincible = false;
 				invincibleCounter = 0;
 			}
+			
+		}
+		if (shotAvailableCounter < 30) {
+			shotAvailableCounter++;
 		}
 	}
+		public void damagePlayer(int attack) {
+			if (gp.player.invincible == false) {
+				gp.player.currentHP -= attack;
+				gp.player.invincible = true;
+			}
+		}
 }

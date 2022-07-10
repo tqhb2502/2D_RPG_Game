@@ -59,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// a array to store all entities in the game
 	// so we can sort them in order of y coordinate
 	// and draw them one by one to avoid unnatural overriding images
-	ArrayList<Entity> entityList = new ArrayList<>();
+	public ArrayList<Entity> entityList = new ArrayList<>();
 	public ArrayList<Entity> projectileList =  new ArrayList<>();
 	
 	// GAME STATE
