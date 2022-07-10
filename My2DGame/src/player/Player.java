@@ -24,6 +24,8 @@ public class Player extends Entity{
 		direction = "down";
 		maxHP = 6;
 		currentHP = maxHP; // 2 life = 1 heart
+		maxMP = 4;
+		currentMP = maxMP;
 		
 		// SOLID AREA
 		solidArea.x = 8;
@@ -174,11 +176,13 @@ public class Player extends Entity{
 		}
 		
 		// PROJECTILE
-		if (gp.keyH.shotPressed == true && projectile.alive == false && shotAvailableCounter == 30) {
+		if (gp.keyH.shotPressed == true && projectile.alive == false && shotAvailableCounter == 30
+				&& projectile.checkMP(this) == true) {
 			projectile.set(worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
 			gp.playSE(5);
 			shotAvailableCounter = 0;
+			projectile.subMP(this);
 		}
 		
 		if (shotAvailableCounter < 30) {

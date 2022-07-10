@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import graphic.EntityGraphic;
 import item.Heart;
+import item.Mana;
 
 public class UI {
 	
@@ -21,7 +22,7 @@ public class UI {
 	public int commandNum = 0;
 	
 	public String currentDialogue;
-	BufferedImage heart_full, heart_half, heart_blank;
+	BufferedImage heart_full, heart_half, heart_blank,mana_full,mana_blank;
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
@@ -31,6 +32,11 @@ public class UI {
 		heart_full = heart.entityGraphic.image;
 		heart_half = heart.entityGraphic.image2;
 		heart_blank = heart.entityGraphic.image3;
+		
+		Mana mana = new Mana(gp);
+		mana.setEntityGraphic(new EntityGraphic(mana));
+		mana_full = mana.entityGraphic.image;
+		mana_blank = mana.entityGraphic.image2;
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -87,6 +93,27 @@ public class UI {
 			i++;
 			x+= gp.tileSize;
 		}
+		// DRAW MAX MP
+		x = gp.tileSize/2;
+		y =  (int)(gp.tileSize*1.5);
+		i = 0;
+		while(i<gp.player.maxMP) {
+			g2.drawImage(mana_blank, x, y, gp.tileSize, gp.tileSize, null);
+			i++;
+			x+=35;
+		}
+		
+		// DRAW CURRENT MP
+		// DRAW MAX MANA
+				x = gp.tileSize/2;
+				y =  (int)(gp.tileSize*1.5);
+				i = 0;
+				while(i<gp.player.currentMP) {
+					g2.drawImage(mana_full, x, y, gp.tileSize, gp.tileSize, null);
+					i++;
+					x+=35;
+				}
+		
 	}
 
 	public void drawTitleScreen() {

@@ -76,5 +76,13 @@ public class Projectile extends Entity {
 			this.entityGraphic.spriteCounter = 0;		// reset counter
 		}
 	}
-
+		public boolean checkMP(Entity user) {
+			
+				if(user.currentMP >= mpCost) return true;
+				else return false;
+	}
+		
+		public void subMP(Entity user) {
+			user.currentMP -= mpCost;
+		}
 }

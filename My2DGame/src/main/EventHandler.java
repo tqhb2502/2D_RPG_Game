@@ -63,6 +63,7 @@ public class EventHandler {
 		gp.gameState = gameState;
 		gp.ui.currentDialogue = "You are drinking the water.\nYour life has been recovered!";
 		gp.player.currentHP = gp.player.maxHP;
+		gp.player.currentMP = gp.player.maxMP;
 		canTouchEvent = false;
 	}
 	

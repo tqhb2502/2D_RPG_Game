@@ -85,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable{
 		// map
 		map.setMapGraphic(new MapGraphic(map));
 		map.setMapLoader(new MapLoader(map));
-		map.mapLoader.loadMap("/maps/world03.txt");
+		map.mapLoader.loadMap("/maps/world01.txt");
 		
 		// entity
 		aSetter.setPlayer();

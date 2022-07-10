@@ -1,10 +1,8 @@
-/projectile/
-/graphic/
-/entity/
-/monster/
-/main/
-/map/
-/player/
-/sound/
-/tiles/
 /maps/
+/entity/
+/main/
+/monster/
+/player/
+/objects/
+/item/
+/projectile/
