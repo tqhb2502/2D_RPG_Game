@@ -22,9 +22,6 @@ public class GreenSlime extends Entity{
 		type = 3;
 		normalAttack = 1;
 		
-		
-		
-		
 		// SOLID AREA
 		solidArea.x = 3;
 		solidArea.y = 18;

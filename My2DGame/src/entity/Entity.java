@@ -69,6 +69,8 @@ public abstract class Entity {	// parent class for every entity in the game
 		
 		// COLLISION
 		collisionOn = false;
+		// world border
+		gp.cChecker.checkBorder(this);
 		// tile
 		gp.cChecker.checkTile(this);
 		// object

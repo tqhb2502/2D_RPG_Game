@@ -9,6 +9,41 @@ public class CollisionChecker {
 		this.gp = gp;
 	}
 	
+	// WORLD BORDER
+	public void checkBorder(Entity entity) {
+		int entityLeftWorldX = entity.worldX + entity.solidArea.x;
+		int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
+		int entityTopWorldY = entity.worldY + entity.solidArea.y;
+		int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
+		
+		switch (entity.direction) {
+		case "up":
+			entityTopWorldY -= entity.speed;
+			if (entityTopWorldY < 0) {
+				entity.collisionOn = true;
+			}
+			break;
+		case "down":
+			entityBottomWorldY += entity.speed;
+			if (entityBottomWorldY > entity.gp.maxWorldRow * entity.gp.tileSize) {
+				entity.collisionOn = true;
+			}
+			break;
+		case "left":
+			entityLeftWorldX -= entity.speed;
+			if (entityLeftWorldX < 0) {
+				entity.collisionOn = true;
+			}
+			break;
+		case "right":
+			entityRightWorldX += entity.speed;
+			if (entityRightWorldX > entity.gp.maxWorldCol * entity.gp.tileSize) {
+				entity.collisionOn = true;
+			}
+			break;
+		}
+	}
+	
 	// ENTITY TO TILE
 	public void checkTile(Entity entity) {
 		

@@ -55,5 +55,10 @@ public class AssetSetter {
 		gp.monster[3].setEntityGraphic(new EntityGraphic(gp.monster[3]));
 		gp.monster[3].worldX = gp.tileSize * 29;
 		gp.monster[3].worldY = gp.tileSize * 22;
+		
+		gp.monster[3] = new Dragon(gp);
+		gp.monster[3].setEntityGraphic(new EntityGraphic(gp.monster[3]));
+		gp.monster[3].worldX = gp.tileSize * 0;
+		gp.monster[3].worldY = gp.tileSize * 34;
 	}
 }
