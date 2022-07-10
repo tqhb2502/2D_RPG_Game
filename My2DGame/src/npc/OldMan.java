@@ -15,9 +15,9 @@ public class OldMan extends Entity{
 		super(gp);
 		
 		// INFO
-		speed = 1;
-		direction = "down";
-		
+		speed = 3;
+		//direction = "down";
+		onPath = true;
 		// SOLID AREA
 		solidArea.x = 8;
 		solidArea.y = 16;
@@ -44,8 +44,15 @@ public class OldMan extends Entity{
 	}
 
 	public void setAction() {
+		if(onPath == true) {
+			int col = 3;
+			int row = 1;
+			searchPath(col, row);
+			
+		}
 		
-		if (actionLockCounter == 0) {
+	else {
+		if(actionLockCounter == 0) {
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
 			
@@ -69,5 +76,7 @@ public class OldMan extends Entity{
 		}
 		
 		actionLockCounter--;
+	
 	}
+}
 }

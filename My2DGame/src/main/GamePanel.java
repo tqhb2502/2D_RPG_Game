@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import map.Map;
+import move.PathFinder;
 import player.Player;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -41,12 +42,13 @@ public class GamePanel extends JPanel implements Runnable{
 	public EventHandler eHandler = new EventHandler(this);
 	Thread gameThread;
 	public double playTime = 0;
+	public PathFinder pFinder = new PathFinder(this);
 	
 	// UI
 	public UI ui = new UI(this);
 	
 	// MAP
-	Map currentMap = new Map(this);
+	public Map currentMap = new Map(this);
 	Map map1 = new Map(this);
 	Map map2 = new Map(this);
 	Map map3 = new Map(this);

@@ -94,7 +94,7 @@ public class UI {
 			x+= gp.tileSize;
 		}
 		// DRAW MAX MP
-		x = gp.tileSize/2;
+		x = gp.tileSize/2-5;
 		y =  (int)(gp.tileSize*1.5);
 		i = 0;
 		while(i<gp.player.maxMP) {
@@ -105,7 +105,7 @@ public class UI {
 		
 		// DRAW CURRENT MP
 		// DRAW MAX MANA
-				x = gp.tileSize/2;
+				x = gp.tileSize/2 -5;
 				y =  (int)(gp.tileSize*1.5);
 				i = 0;
 				while(i<gp.player.currentMP) {

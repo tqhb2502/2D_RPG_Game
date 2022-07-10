@@ -1,11 +1,6 @@
-/objects/
-/player/
-/sound/
-/main/
-/map/
-/monster/
-/npc/
-/projectile/
 /maps/
 /tiles/
+/main/
+/move/
 /entity/
+/npc/
