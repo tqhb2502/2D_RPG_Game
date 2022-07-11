@@ -25,6 +25,7 @@ public class Dragon extends Entity{
 		currentHP = maxHP;
 		type = 3;
 		normalAttack = 2;
+		onPath = false;
 		
 		// PROJECTILE
 		projectile = new Rock(gp);
@@ -54,13 +55,32 @@ public class Dragon extends Entity{
 			e.printStackTrace();
 		}
 	}
+	public void update() {
+		super.update();
+		int xDistance = Math.abs(worldX - gp.player.worldX)/gp.tileSize;
+		int yDistance = Math.abs(worldY - gp.player.worldY)/gp.tileSize;
+		int distance = xDistance + yDistance;
+		if(distance < 5 && onPath == false) {
+			onPath = true;
+		}
+		if(distance > 20 && onPath ==true) {
+			onPath = false;
+		}
+		
+	}
 
 	public void setAction() {
 		
-		if (actionLockCounter == 0) {
+		if(onPath == true) {
+			int col = (gp.player.worldX+gp.player.solidArea.x)/gp.tileSize;
+			int row = (gp.player.worldY+gp.player.solidArea.y)/gp.tileSize;;
+			searchPath(col, row);
 			
+		}
+		
+	else {
+		if(actionLockCounter == 0) {
 			Random random = new Random();
-			
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
 			
 			if (i <= 25) {
@@ -81,7 +101,10 @@ public class Dragon extends Entity{
 			
 			actionLockCounter = 120;
 		}
+		
 		actionLockCounter--;
+	
+	}
 		
 		int i = new Random().nextInt(100) + 1;
 		if ( i>=99 && projectile.alive == false && shotAvailableCounter == 30) {

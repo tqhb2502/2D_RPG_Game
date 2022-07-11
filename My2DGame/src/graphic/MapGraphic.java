@@ -1,5 +1,6 @@
 package graphic;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import map.Map;
@@ -7,6 +8,7 @@ import map.Map;
 public class MapGraphic {
 
 	Map map;
+	public boolean drawPath = true;
 	
 	public MapGraphic(Map map) {
 		this.map = map;
@@ -43,5 +45,16 @@ public class MapGraphic {
 				worldRow++;
 			}
 		}
+		if(drawPath == true) {
+			g2.setColor(new Color(255,0,0,70));
+			for(int i = 0; i < map.gp.pFinder.pathList.size(); i++ ) {
+				int worldX = map.gp.pFinder.pathList.get(i).col * map.gp.tileSize;
+				int worldY = map.gp.pFinder.pathList.get(i).row * map.gp.tileSize;
+				int screenX = worldX - map.gp.player.worldX + map.gp.player.entityGraphic.screenX;
+				int screenY = worldY - map.gp.player.worldY + map.gp.player.entityGraphic.screenY;
+				g2.fillRect(screenX, screenY, map.gp.tileSize, map.gp.tileSize	);
+			}
+		}
 	}
+		
 }

@@ -29,16 +29,20 @@ public class AssetSetter {
 		gp.map1.npc[0].setEntityGraphic(new EntityGraphic(gp.map1.npc[0]));
 		gp.map1.npc[0].worldX = gp.tileSize * 14;
 		gp.map1.npc[0].worldY = gp.tileSize * 28;
+		
 			// monster
 		gp.map1.monster[0] = new GreenSlime(gp);
 		gp.map1.monster[0].setEntityGraphic(new EntityGraphic(gp.map1.monster[0]));
 		gp.map1.monster[0].worldX = gp.tileSize * 5;
 		gp.map1.monster[0].worldY = gp.tileSize * 36;
+		gp.map1.monster[0].setDefault(gp.map1.monster[0].worldX, gp.map1.monster[0].worldY);
+		
 		
 		gp.map1.monster[1] = new GreenSlime(gp);
 		gp.map1.monster[1].setEntityGraphic(new EntityGraphic(gp.map1.monster[1]));
 		gp.map1.monster[1].worldX = gp.tileSize * 11;
 		gp.map1.monster[1].worldY = gp.tileSize * 38;
+		gp.map1.monster[1].setDefault(gp.map1.monster[1].worldX, gp.map1.monster[1].worldY);
 		
 		gp.map1.monster[2] = new GreenSlime(gp);
 		gp.map1.monster[2].setEntityGraphic(new EntityGraphic(gp.map1.monster[2]));

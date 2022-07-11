@@ -15,10 +15,10 @@ public class OldMan extends Entity{
 		super(gp);
 		
 		// INFO
-		defaultSpeed = 3;
+		defaultSpeed = 2;
 		speed = defaultSpeed;
 		//direction = "down";
-		onPath = true;
+		onPath = false;
 		// SOLID AREA
 		solidArea.x = 8;
 		solidArea.y = 16;
@@ -46,8 +46,8 @@ public class OldMan extends Entity{
 
 	public void setAction() {
 		if(onPath == true) {
-			int col = 3;
-			int row = 1;
+			int col = (gp.player.worldX+gp.player.solidArea.x)/gp.tileSize;
+			int row = (gp.player.worldY+gp.player.solidArea.y)/gp.tileSize;;
 			searchPath(col, row);
 			
 		}

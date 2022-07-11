@@ -11,6 +11,7 @@ public abstract class Entity { // parent class for every entity in the game
 	public EntityGraphic entityGraphic;
 
 	public int worldX, worldY; // position of entity in world map
+	public int defaultWorldX, defaultWorldY;
 	public String name;
 	public int type; // 0 = player, 1 = object, 2 = NPC, 3 = monster
 	public final int type_player = 0;
@@ -219,5 +220,10 @@ public abstract class Entity { // parent class for every entity in the game
 //			}
 		}
 
+	}
+	public void setDefault(int x, int y) {
+		defaultWorldX = x;
+		defaultWorldY = y;
+		
 	}
 }
