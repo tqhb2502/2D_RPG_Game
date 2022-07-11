@@ -12,21 +12,21 @@ public class EventHandler {
 		// map 1
 		if (gp.currentMap == gp.map1) {
 			
-			if (hitEvent(2, 49)) {teleportMap2(11, 1);}
-			if (hitEvent(47, 49)) {teleportMap3(34, 1);}
-			if (hitEvent(47, 0)) {endGame();}
+			if (hitEvent(2, 49)) { teleportMap2(11, 1); }
+			if (hitEvent(47, 49)) { teleportMap3(34, 1); }
+			if (hitEvent(47, 0)) { endGame(); }
 		}
 		
 		// map 2
 		else if (gp.currentMap == gp.map2) {
 			
-			if (hitEvent(11, 0)) {teleportMap1(2, 48);}
+			if (hitEvent(11, 0)) { teleportMap1(2, 48); }
 		}
 		
 		// map 3
 		else if (gp.currentMap == gp.map3) {
 			
-			if (hitEvent(34, 0)) {teleportMap1(47, 48);}
+			if (hitEvent(34, 0)) { teleportMap1(47, 48); }
 		}
 	}
 	
@@ -61,7 +61,9 @@ public class EventHandler {
 	}
 	
 	public void endGame() {
-		
+		gp.stopMusic();
+		gp.playSE(4);
+		gp.gameState = gp.finishedState;
 	}
 	
 	// check if player hit event tile

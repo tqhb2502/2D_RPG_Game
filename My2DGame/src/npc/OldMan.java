@@ -15,7 +15,8 @@ public class OldMan extends Entity{
 		super(gp);
 		
 		// INFO
-		speed = 3;
+		defaultSpeed = 3;
+		speed = defaultSpeed;
 		//direction = "down";
 		onPath = true;
 		// SOLID AREA

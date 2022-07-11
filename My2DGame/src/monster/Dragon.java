@@ -19,7 +19,8 @@ public class Dragon extends Entity{
 		
 		// INFO
 		name = "Dragon";
-		speed = 1;
+		defaultSpeed = 1;
+		speed = defaultSpeed;
 		maxHP = 4;
 		currentHP = maxHP;
 		type = 3;

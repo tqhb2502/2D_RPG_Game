@@ -67,6 +67,11 @@ public class UI {
 		if (gp.gameState == gp.deadState) {
 			drawDeadScreen();
 		}
+		
+		// FINISHED STATE
+		if (gp.gameState == gp.finishedState) {
+			drawFinishedScreen();
+		}
 	}
 	
 	private void drawPlayerLife() {
@@ -282,6 +287,37 @@ public class UI {
 		if (commandNum == 1) {
 			g2.drawString(">", x - gp.tileSize / 2, y);
 		}
+	}
+	
+	public void drawFinishedScreen() {
+		
+		// screen
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6F));
+		g2.setColor(Color.gray);
+		g2.fillRect(0,  0,  gp.screenWidth, gp.screenHeight);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8F));
+		g2.setColor(Color.black);
+		g2.fillRect(0, gp.screenHeight / 2 - gp.tileSize, gp.screenWidth, gp.tileSize * 2);
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1F));
+		
+		// text
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
+		g2.setColor(Color.yellow);
+		
+		String text = "YOU WIN";
+		int x = getXForCenteredText(text);
+		int y = gp.screenHeight / 2 + 28;
+		g2.drawString(text, x, y);
+		
+		// menu
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+		g2.setColor(Color.white);
+		
+		text = "Back to main menu";
+		x = getXForCenteredText(text);
+		y += gp.tileSize * 2;
+		g2.drawString(text, x, y);
+		g2.drawString(">", x - gp.tileSize / 2, y);
 	}
 	
 	public int getXForCenteredText(String text) {

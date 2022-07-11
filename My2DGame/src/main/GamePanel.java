@@ -70,6 +70,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int pauseState = 2;
 	public final int dialogueState = 3;
 	public final int deadState = 4;
+	public final int finishedState = 5;
 	
 	// CONSTRUCTOR
 	public GamePanel() {
@@ -276,5 +277,9 @@ public class GamePanel extends JPanel implements Runnable{
 	public void playSE(int i) {
 		se.setFile(i);
 		se.play();
+	}
+	
+	public void stopSE() {
+		se.stop();
 	}
 }

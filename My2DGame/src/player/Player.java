@@ -20,7 +20,8 @@ public class Player extends Entity{
 		this.keyH = keyH;
 		
 		// INFO
-		speed = 6;
+		defaultSpeed = 5;
+		speed = defaultSpeed;
 		direction = "down";
 		maxHP = 6;
 		currentHP = maxHP; // 2 life = 1 heart
@@ -92,8 +93,18 @@ public class Player extends Entity{
 			}
 		}
 		
-		// INTERACT KEYS
-		if (keyH.enterPressed == true) {
+		// DASHING KEY PRESSED
+		if (keyH.dashPressed == true && isIdle() == true) {
+			
+			dashing = true;
+			
+			entityGraphic.spriteCounter = 0;
+			speed = 9;
+			entityGraphic.spriteNum = 2;
+		}
+		
+		// INTERACT WITH NPC OR ATTACK
+		if (keyH.enterPressed == true && isIdle() == true) {
 			
 			// INTERACT WITH NPC
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -101,12 +112,17 @@ public class Player extends Entity{
 			
 			// ATTACKING
 			if (interactWithNPC == false) {
+				this.entityGraphic.spriteCounter = 0;
 				attacking = true;
 			}
 		}
 		
+		// DASHING
+		if (dashing == true) {
+			dashing();
+		}
 		// ATTACKING
-		if (attacking == true) {
+		else if (attacking == true) {
 			attacking();
 		}
 		// MOVEMENT KEYS
@@ -164,30 +180,33 @@ public class Player extends Entity{
 			}
 			
 			// SWITCH SPRITE
-			this.entityGraphic.spriteCounter++;
-			if (this.entityGraphic.spriteCounter > 10) {
-				if (this.entityGraphic.spriteNum == 1) {	// change the image
-					this.entityGraphic.spriteNum = 2;
+			entityGraphic.spriteCounter++;
+			
+			if (entityGraphic.spriteCounter > 10) {
+				
+				if (entityGraphic.spriteNum == 1) {	// change the image
+					entityGraphic.spriteNum = 2;
 				} else {
-					this.entityGraphic.spriteNum = 1;
+					entityGraphic.spriteNum = 1;
 				}
 				
-				this.entityGraphic.spriteCounter = 0;		// reset counter
+				entityGraphic.spriteCounter = 0;		// reset counter
 			}
 		} else {
 			// STAND SPRITE
 			// switch to stand still animation when no key is pressed
-			this.entityGraphic.standCounter++;
+			entityGraphic.standCounter++;
 			
-			if (this.entityGraphic.standCounter == 20) {
-				this.entityGraphic.spriteNum = 1;
-				this.entityGraphic.standCounter = 0;
+			if (entityGraphic.standCounter == 20) {
+				entityGraphic.spriteNum = 1;
+				entityGraphic.standCounter = 0;
 			}
 		}
 		
-		// PROJECTILE
+		// PROJECTILE (not when dashing)
 		if (gp.keyH.shotPressed == true && projectile.alive == false && shotAvailableCounter == 30
-				&& projectile.checkMP(this) == true) {
+				&& projectile.checkMP(this) == true && isIdle() == true) {
+			
 			projectile.set(worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
 			gp.playSE(5);
@@ -211,16 +230,17 @@ public class Player extends Entity{
 		}
 	}
 	
+	// attacking
 	public void attacking() {
 		
-		this.entityGraphic.spriteCounter++;
+		entityGraphic.spriteCounter++;
 		
-		if (this.entityGraphic.spriteCounter <= 5) {
-			this.entityGraphic.spriteNum = 1;
+		if (entityGraphic.spriteCounter <= 5) {
+			entityGraphic.spriteNum = 1;
 		}
 		
-		if (5 < this.entityGraphic.spriteCounter && this.entityGraphic.spriteCounter <= 25) {
-			this.entityGraphic.spriteNum = 2;
+		if (5 < entityGraphic.spriteCounter && entityGraphic.spriteCounter <= 25) {
+			entityGraphic.spriteNum = 2;
 			
 			// save player's worldX, worldY and solidArea
 			int currentWorldX = worldX;
@@ -252,10 +272,61 @@ public class Player extends Entity{
 			solidArea.height = solidAreaHeight;
 		}
 		
-		if (25 < this.entityGraphic.spriteCounter) {
-			this.entityGraphic.spriteNum = 1;
-			this.entityGraphic.spriteCounter = 0;
+		if (25 < entityGraphic.spriteCounter) {
+			entityGraphic.spriteNum = 1;
+			entityGraphic.spriteCounter = 0;
 			attacking = false;
+		}
+	}
+	
+	// dashing
+	public void dashing() {
+		
+		// COLLISION
+		collisionOn = false;	// reset collision status
+		// tile
+		boolean isWater = gp.cChecker.checkTile(this);
+		if (isWater == true) { drinkWater(); }
+		// object
+		int objectIndex = gp.cChecker.checkObject(this);
+		pickUpObject(objectIndex);
+		// npc
+		gp.cChecker.checkEntity(this, gp.npc);
+		// monster
+		int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
+		interactMonster(monsterIndex);
+		
+		// EVENT
+		gp.eHandler.checkEvent();
+		
+		// MOVEMENT
+		// if collisionOn is false, player can move
+		if (collisionOn == false) {
+			switch (direction) {
+			case "up":
+				worldY -= speed;	// update position
+				break;
+			case "down":
+				worldY += speed;
+				break;
+			case "left":
+				worldX -= speed;
+				break;
+			case "right":
+				worldX += speed;
+				break;
+			}
+		}
+		
+		entityGraphic.spriteCounter++;
+		
+		if (entityGraphic.spriteCounter == 10) {
+			
+			dashing = false;
+			
+			entityGraphic.spriteCounter = 0;
+			speed = defaultSpeed;
+			entityGraphic.spriteNum = 1;
 		}
 	}
 	

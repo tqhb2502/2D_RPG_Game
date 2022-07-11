@@ -19,8 +19,10 @@ public abstract class Entity { // parent class for every entity in the game
 	public final int type_monster = 3;
 
 	public int speed;
+	public int defaultSpeed;
 	public String direction = "none"; // the direction of entity
 	public boolean attacking = false;
+	public boolean dashing = false;
 	public boolean alive;
 
 	public int actionLockCounter = 0; // entity can not do a specific action until counter counts to certain number
@@ -144,6 +146,16 @@ public abstract class Entity { // parent class for every entity in the game
 			gp.player.currentHP -= attack;
 			gp.player.invincible = true;
 		}
+	}
+	
+	public boolean isIdle() {
+		
+		boolean isIdle = true;
+		
+		if (attacking == true) { isIdle = false; }
+		if (dashing == true) { isIdle = false; }
+		
+		return isIdle;
 	}
 
 	public void searchPath(int goalCol, int goalRow) {

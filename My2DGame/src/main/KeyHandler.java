@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener{
 	GamePanel gp;
 	
-	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, shotPressed;
+	public boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed, shotPressed, dashPressed;
 	
 	// CONSTRUCTOR
 	public KeyHandler(GamePanel gp) {
@@ -83,8 +83,13 @@ public class KeyHandler implements KeyListener{
 			if (code == KeyEvent.VK_ENTER) {
 				enterPressed = true;
 			}
+			
 			if (code == KeyEvent.VK_F) {
 				shotPressed = true;
+			}
+			
+			if (code == KeyEvent.VK_SPACE) {
+				dashPressed = true;
 			}
 		}
 		
@@ -157,6 +162,15 @@ public class KeyHandler implements KeyListener{
 				}
 			}
 		}
+		
+		// FINISHED STATE
+		else if (gp.gameState == gp.finishedState) {
+			
+			if (code == KeyEvent.VK_ENTER) {
+				gp.stopSE();
+				gp.setupGame();
+			}
+		}
 	}
 
 	@Override
@@ -182,8 +196,13 @@ public class KeyHandler implements KeyListener{
 		if (code == KeyEvent.VK_ENTER) {
 			enterPressed = false;
 		}
+		
 		if (code == KeyEvent.VK_F) {
 			shotPressed = false;
+		}
+		
+		if (code == KeyEvent.VK_SPACE) {
+			dashPressed = false;
 		}
 	}
 
