@@ -62,9 +62,11 @@ public class Dragon extends Entity{
 		int distance = xDistance + yDistance;
 		if(distance < 5 && onPath == false) {
 			onPath = true;
+			speed = 2;
 		}
-		if(distance > 20 && onPath ==true) {
+		if(distance > 5 && onPath ==true) {
 			onPath = false;
+			speed = 1;
 		}
 	}
 
@@ -78,6 +80,17 @@ public class Dragon extends Entity{
 		}
 		
 	else {
+		int xDistance = Math.abs(worldX - defaultWorldX)/gp.tileSize;
+		int yDistance = Math.abs(worldY - defaultWorldY)/gp.tileSize;
+		if(xDistance > 3 || yDistance >3) {
+			
+			int col = defaultWorldX/gp.tileSize;
+			int row = defaultWorldY/gp.tileSize;
+			//System.out.println(col);
+			//System.out.println(row);
+			searchPath(col,row);
+		}
+		else {
 		if(counter.actionLockCounter == 0) {
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
@@ -104,9 +117,11 @@ public class Dragon extends Entity{
 		counter.actionLockCounter--;
 	
 	}
+	}
 		
 		int i = new Random().nextInt(100) + 1;
 		if ( i>=99 && projectile.alive == false && counter.shotAvailableCounter == 30) {
+			
 			projectile.set(worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
 			counter.shotAvailableCounter = 0;
