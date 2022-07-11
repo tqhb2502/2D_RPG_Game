@@ -71,6 +71,7 @@ public abstract class Entity { // parent class for every entity in the game
 	public void checkCollision() {
 		collisionOn = false;
 		// tile
+		if(this.name != "Dragon") {
 		gp.cChecker.checkTile(this);
 		// object
 		gp.cChecker.checkObject(this);
@@ -79,6 +80,7 @@ public abstract class Entity { // parent class for every entity in the game
 		// monster
 		gp.cChecker.checkEntity(this, gp.monster);
 		// player
+		}
 		boolean contactPlayer = gp.cChecker.checkPlayer(this);
 		if (this.type == type_monster && contactPlayer == true) {
 			damagePlayer(normalAttack);
@@ -158,7 +160,7 @@ public abstract class Entity { // parent class for every entity in the game
 		int startCol = (worldX + solidArea.x)/gp.tileSize;
 		int startRow = (worldY + solidArea.y)/gp.tileSize;
 		
-		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow);
+		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow,this);
 		
 		if(gp.pFinder.search() == true) {
 			//System.out.println(1);

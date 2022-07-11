@@ -2,6 +2,7 @@ package path_finder;
 
 import java.util.ArrayList;
 
+import entity.Entity;
 import main.GamePanel;
 
 public class PathFinder {
@@ -51,9 +52,13 @@ public class PathFinder {
 	}
 
 	// SET START NODE AND GOALNODE, SOLID NODE
-	public void setNodes(int startCol, int startRow, int goalCol, int goalRow) {
+	public void setNodes(int startCol, int startRow, int goalCol, int goalRow, Entity entity) {
 		resetNodes();
-
+		if(startCol >= gp.maxWorldCol) startCol = gp.maxWorldCol;
+		if(startRow >= gp.maxWorldRow) startRow = gp.maxScreenRow;
+		if(startCol < 0) startCol = 0;
+		if(startRow < 0) startRow = 0;
+		
 		startNode = node[startCol][startRow];
 		currentNode = startNode;
 		
@@ -65,7 +70,7 @@ public class PathFinder {
 		while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
 			// check titleNum
 			int tileNum = gp.currentMap.data[col][row];
-			if (gp.currentMap.tile[tileNum].collision == true) {
+			if (gp.currentMap.tile[tileNum].collision == true && entity.name != "Dragon") {
 
 				node[col][row].solid = true;
 			}

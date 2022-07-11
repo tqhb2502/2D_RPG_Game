@@ -66,7 +66,7 @@ public class Dragon extends Entity{
 		}
 		if(distance > 5 && onPath ==true) {
 			onPath = false;
-			speed = 1;
+			speed = defaultSpeed;
 		}
 	}
 
@@ -82,7 +82,7 @@ public class Dragon extends Entity{
 	else {
 		int xDistance = Math.abs(worldX - defaultWorldX)/gp.tileSize;
 		int yDistance = Math.abs(worldY - defaultWorldY)/gp.tileSize;
-		if(xDistance > 3 || yDistance >3) {
+		if(xDistance > 2 || yDistance > 2) {
 			
 			int col = defaultWorldX/gp.tileSize;
 			int row = defaultWorldY/gp.tileSize;

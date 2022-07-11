@@ -47,11 +47,43 @@ public class GreenSlime extends Entity{
 			e.printStackTrace();
 		}
 	}
-	
-	public void setAction() {
+	public void update() {
+		super.update();
+		int xDistance = Math.abs(worldX - gp.player.worldX)/gp.tileSize;
+		int yDistance = Math.abs(worldY - gp.player.worldY)/gp.tileSize;
+		int distance = xDistance + yDistance;
+		if(distance < 3 && onPath == false) {
+			onPath = true;
+			speed = 2;
+		}
+		if(distance > 4 && onPath ==true) {
+			onPath = false;
+			speed = defaultSpeed;
+		}
+	}
+
+public void setAction() {
 		
-		if (counter.actionLockCounter == 0) {
-				
+		if(onPath == true) {
+			int col = (gp.player.worldX+gp.player.solidArea.x)/gp.tileSize;
+			int row = (gp.player.worldY+gp.player.solidArea.y)/gp.tileSize;;
+			searchPath(col, row);
+			
+		}
+		
+	else {
+		int xDistance = Math.abs(worldX - defaultWorldX)/gp.tileSize;
+		int yDistance = Math.abs(worldY - defaultWorldY)/gp.tileSize;
+		if(xDistance > 1 || yDistance > 1) {
+			
+			int col = defaultWorldX/gp.tileSize;
+			int row = defaultWorldY/gp.tileSize;
+			//System.out.println(col);
+			//System.out.println(row);
+			searchPath(col,row);
+		}
+		else {
+		if(counter.actionLockCounter == 0) {
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
 			
@@ -75,5 +107,10 @@ public class GreenSlime extends Entity{
 		}
 		
 		counter.actionLockCounter--;
+	
+	}
+	}
+		
+		
 	}
 }

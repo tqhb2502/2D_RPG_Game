@@ -8,7 +8,7 @@ import map.Map;
 public class MapGraphic {
 
 	Map map;
-	public boolean drawPath = true;
+	public boolean drawPath = false;
 	
 	public MapGraphic(Map map) {
 		this.map = map;
