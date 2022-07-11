@@ -3,12 +3,15 @@ package entity;
 import java.awt.Rectangle;
 
 import graphic.EntityGraphic;
+import main.Counter;
 import main.GamePanel;
 import projectile.Projectile;
 
 public abstract class Entity { // parent class for every entity in the game
+	
 	public GamePanel gp;
 	public EntityGraphic entityGraphic;
+	public Counter counter;
 
 	public int worldX, worldY; // position of entity in world map
 	public int defaultWorldX, defaultWorldY;
@@ -26,12 +29,7 @@ public abstract class Entity { // parent class for every entity in the game
 	public boolean dashing = false;
 	public boolean alive;
 
-	public int actionLockCounter = 0; // entity can not do a specific action until counter counts to certain number
-
 	public boolean invincible = false; // can receive damage from monsters or not
-	public int invincibleCounter = 0; // amount of invincible time
-	
-	public int mpRecoverCounter = 0;	// when this counter counts to a specified number, MP is recovered
 
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // the solid area of entity, if it hit a tile that is not
 																// passable, entity can not move
@@ -46,17 +44,15 @@ public abstract class Entity { // parent class for every entity in the game
 	// entity status
 	public int maxHP;
 	public int currentHP;
-	public int projectileAttack = 0;
 	public int maxMP;
 	public int currentMP;
 	public int normalAttack;
-	public int mpCost;
 	public Projectile projectile;
-	public int shotAvailableCounter;
 
 	// CONSTRUCTOR
 	public Entity(GamePanel gp) {
 		this.gp = gp;
+		counter = new Counter();
 	}
 
 	public void setEntityGraphic(EntityGraphic entityGraphic) {
@@ -73,7 +69,6 @@ public abstract class Entity { // parent class for every entity in the game
 	}
 
 	public void checkCollision() {
-		// COLLISION
 		collisionOn = false;
 		// tile
 		gp.cChecker.checkTile(this);
@@ -88,12 +83,12 @@ public abstract class Entity { // parent class for every entity in the game
 		if (this.type == type_monster && contactPlayer == true) {
 			damagePlayer(normalAttack);
 		}
-
 	}
 
 	public void update() {
 		// DIRECTION
 		setAction();
+		// COLLISION
 		checkCollision();
 		// MOVEMENT
 		if (collisionOn == false) {
@@ -114,31 +109,31 @@ public abstract class Entity { // parent class for every entity in the game
 		}
 
 		// SWITCH SPRITE
-		this.entityGraphic.spriteCounter++;
-		if (this.entityGraphic.spriteCounter > 10) {
-			if (this.entityGraphic.spriteNum == 1) { // change the image
-				this.entityGraphic.spriteNum = 2;
+		counter.movingCounter++;
+		if (counter.movingCounter > 10) {
+			if (entityGraphic.spriteNum == 1) { // change the image
+				entityGraphic.spriteNum = 2;
 			} else {
-				this.entityGraphic.spriteNum = 1;
+				entityGraphic.spriteNum = 1;
 			}
 
-			this.entityGraphic.spriteCounter = 0; // reset counter
+			counter.movingCounter = 0; // reset counter
 		}
 
 		// INVINCIBLE TIME
 		if (invincible == true) {
 
-			invincibleCounter++;
+			counter.invincibleCounter++;
 
-			if (invincibleCounter == 60) {
+			if (counter.invincibleCounter == 60) {
 				invincible = false;
-				invincibleCounter = 0;
+				counter.invincibleCounter = 0;
 			}
 
 		}
 
-		if (shotAvailableCounter < 30) {
-			shotAvailableCounter++;
+		if (counter.shotAvailableCounter < 30) {
+			counter.shotAvailableCounter++;
 		}
 	}
 
@@ -224,6 +219,5 @@ public abstract class Entity { // parent class for every entity in the game
 	public void setDefault(int x, int y) {
 		defaultWorldX = x;
 		defaultWorldY = y;
-		
 	}
 }

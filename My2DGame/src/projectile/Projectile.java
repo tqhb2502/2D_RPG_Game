@@ -1,13 +1,14 @@
 package projectile;
 
 import entity.Entity;
-import graphic.EntityGraphic;
 import main.GamePanel;
 
 public class Projectile extends Entity {
 	
 	Entity user;
-
+	
+	public int projectileAttack;
+	public int mpCost;
 	
 	public Projectile(GamePanel gp) {
 		super(gp);
@@ -64,16 +65,16 @@ public class Projectile extends Entity {
 		}
 		
 		// SWITCH SPRITE
-		this.entityGraphic.spriteCounter++;	// everytime a frame passed, increase the counter
+		counter.movingCounter++;	// everytime a frame passed, increase the counter
 		
-		if (this.entityGraphic.spriteCounter > 10) {
+		if (counter.movingCounter > 10) {
 			if (this.entityGraphic.spriteNum == 1) {	// change the image
 				this.entityGraphic.spriteNum = 2;
 			} else {
 				this.entityGraphic.spriteNum = 1;
 			}
 			
-			this.entityGraphic.spriteCounter = 0;		// reset counter
+			counter.movingCounter = 0;		// reset counter
 		}
 	}
 	

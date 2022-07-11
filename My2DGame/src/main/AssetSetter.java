@@ -207,7 +207,7 @@ public class AssetSetter {
 	}
 	
 	public void setPlayer() {
-		gp.player = new Player(gp, gp.keyH);
+		gp.player = new Player(gp);
 		gp.player.setEntityGraphic(new EntityGraphic(gp.player));
 		
 		// position when game starts

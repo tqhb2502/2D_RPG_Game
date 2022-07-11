@@ -14,7 +14,7 @@ import graphic.EntityGraphic;
 import item.Heart;
 import item.Mana;
 
-public class UI {
+public class UIMaker {
 	
 	GamePanel gp;
 	Graphics2D g2;
@@ -24,7 +24,7 @@ public class UI {
 	public String currentDialogue;
 	BufferedImage heart_full, heart_half, heart_blank,mana_full,mana_blank;
 	
-	public UI(GamePanel gp) {
+	public UIMaker(GamePanel gp) {
 		this.gp = gp;
 		
 		Heart heart = new Heart(gp);

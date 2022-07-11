@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import map.Map;
-import move.PathFinder;
+import path_finder.PathFinder;
 import player.Player;
 
 public class GamePanel extends JPanel implements Runnable{
@@ -45,7 +45,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public PathFinder pFinder = new PathFinder(this);
 	
 	// UI
-	public UI ui = new UI(this);
+	public UIMaker ui = new UIMaker(this);
 	
 	// MAP
 	public Map currentMap, map1, map2, map3;

@@ -7,17 +7,13 @@ import javax.imageio.ImageIO;
 import entity.Entity;
 import graphic.EntityGraphic;
 import main.GamePanel;
-import main.KeyHandler;
 import projectile.Fireball;
 
 public class Player extends Entity{
 	
-	KeyHandler keyH;
-	
-	public Player(GamePanel gp, KeyHandler keyH) {
+	public Player(GamePanel gp) {
 		
 		super(gp);
-		this.keyH = keyH;
 		
 		// INFO
 		defaultSpeed = 5;
@@ -84,27 +80,27 @@ public class Player extends Entity{
 		// RECOVER MP
 		if (currentMP < maxMP) {
 			
-			mpRecoverCounter++;
+			counter.mpRecoverCounter++;
 			
-			if (mpRecoverCounter == 120) {
+			if (counter.mpRecoverCounter == 120) {
 				
 				currentMP++;
-				mpRecoverCounter = 0;
+				counter.mpRecoverCounter = 0;
 			}
 		}
 		
 		// DASHING KEY PRESSED
-		if (keyH.dashPressed == true && isIdle() == true) {
+		if (gp.keyH.dashPressed == true && isIdle() == true) {
 			
 			dashing = true;
 			
-			entityGraphic.spriteCounter = 0;
+			counter.frameCounter = 0;
 			speed = 9;
 			entityGraphic.spriteNum = 2;
 		}
 		
 		// INTERACT WITH NPC OR ATTACK
-		if (keyH.enterPressed == true && isIdle() == true) {
+		if (gp.keyH.enterPressed == true && isIdle() == true) {
 			
 			// INTERACT WITH NPC
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -112,7 +108,7 @@ public class Player extends Entity{
 			
 			// ATTACKING
 			if (interactWithNPC == false) {
-				this.entityGraphic.spriteCounter = 0;
+				counter.frameCounter = 0;
 				attacking = true;
 			}
 		}
@@ -126,20 +122,20 @@ public class Player extends Entity{
 			attacking();
 		}
 		// MOVEMENT KEYS
-		else if (keyH.upPressed == true || keyH.downPressed == true || 
-				keyH.leftPressed == true || keyH.rightPressed == true) {
+		else if (gp.keyH.upPressed == true || gp.keyH.downPressed == true || 
+				gp.keyH.leftPressed == true || gp.keyH.rightPressed == true) {
 			
 			// DIRECTION
-			if (keyH.upPressed == true) {
+			if (gp.keyH.upPressed == true) {
 				direction = "up";	// update direction
 			}
-			else if (keyH.downPressed == true) {
+			else if (gp.keyH.downPressed == true) {
 				direction = "down";
 			}
-			else if (keyH.leftPressed == true) {
+			else if (gp.keyH.leftPressed == true) {
 				direction = "left";
 			}
-			else if (keyH.rightPressed == true) {
+			else if (gp.keyH.rightPressed == true) {
 				direction = "right";
 			}
 			
@@ -180,9 +176,9 @@ public class Player extends Entity{
 			}
 			
 			// SWITCH SPRITE
-			entityGraphic.spriteCounter++;
+			counter.movingCounter++;
 			
-			if (entityGraphic.spriteCounter > 10) {
+			if (counter.movingCounter > 10) {
 				
 				if (entityGraphic.spriteNum == 1) {	// change the image
 					entityGraphic.spriteNum = 2;
@@ -190,42 +186,42 @@ public class Player extends Entity{
 					entityGraphic.spriteNum = 1;
 				}
 				
-				entityGraphic.spriteCounter = 0;		// reset counter
+				counter.movingCounter = 0;	// reset counter
 			}
 		} else {
 			// STAND SPRITE
 			// switch to stand still animation when no key is pressed
-			entityGraphic.standCounter++;
+			counter.standCounter++;
 			
-			if (entityGraphic.standCounter == 20) {
+			if (counter.standCounter == 20) {
 				entityGraphic.spriteNum = 1;
-				entityGraphic.standCounter = 0;
+				counter.standCounter = 0;
 			}
 		}
 		
 		// PROJECTILE (not when dashing)
-		if (gp.keyH.shotPressed == true && projectile.alive == false && shotAvailableCounter == 30
+		if (gp.keyH.shotPressed == true && projectile.alive == false && counter.shotAvailableCounter == 30
 				&& projectile.checkMP(this) == true && isIdle() == true) {
 			
 			projectile.set(worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
 			gp.playSE(5);
-			shotAvailableCounter = 0;
+			counter.shotAvailableCounter = 0;
 			projectile.subMP(this);
 		}
 		
-		if (shotAvailableCounter < 30) {
-			shotAvailableCounter++;
+		if (counter.shotAvailableCounter < 30) {
+			counter.shotAvailableCounter++;
 		}
 		
 		// INVINCIBLE TIME
 		if (invincible == true) {
 			
-			invincibleCounter++;
+			counter.invincibleCounter++;
 			
-			if (invincibleCounter == 60) {
+			if (counter.invincibleCounter == 60) {
 				invincible = false;
-				invincibleCounter = 0;
+				counter.invincibleCounter = 0;
 			}
 		}
 	}
@@ -233,13 +229,13 @@ public class Player extends Entity{
 	// attacking
 	public void attacking() {
 		
-		entityGraphic.spriteCounter++;
+		counter.frameCounter++;
 		
-		if (entityGraphic.spriteCounter <= 5) {
+		if (counter.frameCounter <= 5) {
 			entityGraphic.spriteNum = 1;
 		}
 		
-		if (5 < entityGraphic.spriteCounter && entityGraphic.spriteCounter <= 25) {
+		if (5 < counter.frameCounter && counter.frameCounter <= 25) {
 			entityGraphic.spriteNum = 2;
 			
 			// save player's worldX, worldY and solidArea
@@ -272,9 +268,9 @@ public class Player extends Entity{
 			solidArea.height = solidAreaHeight;
 		}
 		
-		if (25 < entityGraphic.spriteCounter) {
+		if (25 < counter.frameCounter) {
 			entityGraphic.spriteNum = 1;
-			entityGraphic.spriteCounter = 0;
+			counter.frameCounter = 0;
 			attacking = false;
 		}
 	}
@@ -318,13 +314,13 @@ public class Player extends Entity{
 			}
 		}
 		
-		entityGraphic.spriteCounter++;
+		counter.frameCounter++;
 		
-		if (entityGraphic.spriteCounter == 10) {
+		if (counter.frameCounter == 10) {
 			
 			dashing = false;
 			
-			entityGraphic.spriteCounter = 0;
+			counter.frameCounter = 0;
 			speed = defaultSpeed;
 			entityGraphic.spriteNum = 1;
 		}

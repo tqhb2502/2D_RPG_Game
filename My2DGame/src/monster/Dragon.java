@@ -66,7 +66,6 @@ public class Dragon extends Entity{
 		if(distance > 20 && onPath ==true) {
 			onPath = false;
 		}
-		
 	}
 
 	public void setAction() {
@@ -79,7 +78,7 @@ public class Dragon extends Entity{
 		}
 		
 	else {
-		if(actionLockCounter == 0) {
+		if(counter.actionLockCounter == 0) {
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
 			
@@ -99,18 +98,18 @@ public class Dragon extends Entity{
 				direction = "right";
 			}
 			
-			actionLockCounter = 120;
+			counter.actionLockCounter = 120;
 		}
 		
-		actionLockCounter--;
+		counter.actionLockCounter--;
 	
 	}
 		
 		int i = new Random().nextInt(100) + 1;
-		if ( i>=99 && projectile.alive == false && shotAvailableCounter == 30) {
+		if ( i>=99 && projectile.alive == false && counter.shotAvailableCounter == 30) {
 			projectile.set(worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
-			shotAvailableCounter = 0;
+			counter.shotAvailableCounter = 0;
 		}
 	}
 }

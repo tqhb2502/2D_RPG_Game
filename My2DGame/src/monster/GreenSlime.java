@@ -50,7 +50,7 @@ public class GreenSlime extends Entity{
 	
 	public void setAction() {
 		
-		if (actionLockCounter == 0) {
+		if (counter.actionLockCounter == 0) {
 				
 			Random random = new Random();
 			int i = random.nextInt(100) + 1;	// get a number between 1 and 100 randomly
@@ -71,9 +71,9 @@ public class GreenSlime extends Entity{
 				direction = "right";
 			}
 			
-			actionLockCounter = 120;
+			counter.actionLockCounter = 120;
 		}
 		
-		actionLockCounter--;
+		counter.actionLockCounter--;
 	}
 }

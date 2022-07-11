@@ -1,4 +1,4 @@
-package move;
+package path_finder;
 
 import java.util.ArrayList;
 

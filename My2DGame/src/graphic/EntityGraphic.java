@@ -20,8 +20,6 @@ public class EntityGraphic {
 	public BufferedImage image, image2, image3; // store image to be displayed
 
 	public int spriteNum = 1; // the index of current displayed image
-	public int spriteCounter = 0; // the number of frames that the entity moves
-	public int standCounter = 0; // the number of frames that the entity stands still
 	
 	//HPbar
 	public boolean hpBarOn = false;
