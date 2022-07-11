@@ -90,13 +90,20 @@ public class Player extends Entity{
 		}
 		
 		// DASHING KEY PRESSED
-		if (gp.keyH.dashPressed == true && isIdle() == true) {
+		if (gp.keyH.dashPressed == true && isIdle() == true && counter.dashAvailableCounter == 0) {
 			
 			dashing = true;
 			
 			counter.frameCounter = 0;
-			speed = 9;
+			speed = 12;
 			entityGraphic.spriteNum = 2;
+			
+			counter.dashAvailableCounter = 300;
+		}
+		
+		if (counter.dashAvailableCounter > 0) {
+			
+			counter.dashAvailableCounter--;
 		}
 		
 		// INTERACT WITH NPC OR ATTACK
@@ -200,18 +207,18 @@ public class Player extends Entity{
 		}
 		
 		// PROJECTILE (not when dashing)
-		if (gp.keyH.shotPressed == true && projectile.alive == false && counter.shotAvailableCounter == 30
-				&& projectile.checkMP(this) == true && isIdle() == true) {
+		if (gp.keyH.shotPressed == true && projectile.alive == false && counter.shotAvailableCounter == 0
+			&& projectile.checkMP(this) == true && isIdle() == true) {
 			
 			projectile.set(worldX, worldY, direction, true, this);
 			gp.projectileList.add(projectile);
 			gp.playSE(5);
-			counter.shotAvailableCounter = 0;
+			counter.shotAvailableCounter = 60;
 			projectile.subMP(this);
 		}
 		
-		if (counter.shotAvailableCounter < 30) {
-			counter.shotAvailableCounter++;
+		if (counter.shotAvailableCounter > 0) {
+			counter.shotAvailableCounter--;
 		}
 		
 		// INVINCIBLE TIME

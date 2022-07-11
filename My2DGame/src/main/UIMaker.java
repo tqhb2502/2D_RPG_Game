@@ -50,12 +50,14 @@ public class UIMaker {
 		// PLAY STATE
 		if (gp.gameState == gp.playState) {
 			drawPlayerLife();
+			drawSkillStatus();
 		}
 		
 		// PAUSE STATE
 		if (gp.gameState == gp.pauseState) {
-			drawPauseScreen();
 			drawPlayerLife();
+			drawSkillStatus();
+			drawPauseScreen();
 		}
 		
 		// DIALOGUE STATE
@@ -109,16 +111,43 @@ public class UIMaker {
 		}
 		
 		// DRAW CURRENT MP
-		// DRAW MAX MANA
-				x = gp.tileSize/2 -5;
-				y =  (int)(gp.tileSize*1.5);
-				i = 0;
-				while(i<gp.player.currentMP) {
-					g2.drawImage(mana_full, x, y, gp.tileSize, gp.tileSize, null);
-					i++;
-					x+=35;
-				}
+		x = gp.tileSize/2 -5;
+		y =  (int)(gp.tileSize*1.5);
+		i = 0;
+		while(i<gp.player.currentMP) {
+			g2.drawImage(mana_full, x, y, gp.tileSize, gp.tileSize, null);
+			i++;
+			x+=35;
+		}
 		
+	}
+	
+	public void drawSkillStatus() {
+		
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
+		
+		// dash
+		g2.setColor(Color.gray);
+		String text = "Dash";
+		int x = gp.tileSize / 2;
+		int y = gp.tileSize * 3 + gp.tileSize / 2;
+		g2.drawString(text, x, y);
+		
+		if (gp.player.counter.dashAvailableCounter == 0) {
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);	
+		}
+		
+		// shot
+		g2.setColor(Color.gray);
+		text = "Shot";
+		y += gp.tileSize;
+		g2.drawString(text, x, y);
+		
+		if (gp.player.counter.shotAvailableCounter == 0) {
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);	
+		}
 	}
 
 	public void drawTitleScreen() {

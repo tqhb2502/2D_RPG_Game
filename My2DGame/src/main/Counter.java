@@ -9,6 +9,7 @@ public class Counter {
 	public int standCounter; // the number of frames that the entity stands still
 	public int frameCounter; // the number of frames passed
 	public int shotAvailableCounter;
+	public int dashAvailableCounter;
 	
 	public Counter() {
 		actionLockCounter = 0;
@@ -18,5 +19,6 @@ public class Counter {
 		standCounter = 0;
 		frameCounter = 0;
 		shotAvailableCounter = 0;
+		dashAvailableCounter = 0;
 	}
 }
