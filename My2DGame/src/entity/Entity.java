@@ -218,6 +218,7 @@ public abstract class Entity { // parent class for every entity in the game
 		}
 
 	}
+	
 	public void setDefault(int x, int y) {
 		defaultWorldX = x;
 		defaultWorldY = y;

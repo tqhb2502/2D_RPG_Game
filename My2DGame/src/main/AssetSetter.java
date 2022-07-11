@@ -105,6 +105,7 @@ public class AssetSetter {
 		gp.map2.monster[0].setEntityGraphic(new EntityGraphic(gp.map2.monster[0]));
 		gp.map2.monster[0].worldX = gp.tileSize * 6;
 		gp.map2.monster[0].worldY = gp.tileSize * 12;
+		gp.map2.monster[0].setDefault(gp.map2.monster[0].worldX, gp.map2.monster[0].worldY);
 		
 		gp.map2.monster[1] = new GreenSlime(gp);
 		gp.map2.monster[1].setEntityGraphic(new EntityGraphic(gp.map2.monster[1]));

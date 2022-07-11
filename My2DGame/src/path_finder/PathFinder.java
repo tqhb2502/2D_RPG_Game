@@ -53,9 +53,12 @@ public class PathFinder {
 
 	// SET START NODE AND GOALNODE, SOLID NODE
 	public void setNodes(int startCol, int startRow, int goalCol, int goalRow, Entity entity) {
+		
 		resetNodes();
-		if(startCol >= gp.maxWorldCol) startCol = gp.maxWorldCol;
-		if(startRow >= gp.maxWorldRow) startRow = gp.maxScreenRow;
+		
+		// sua loi ra ngoai map
+		if(startCol >= gp.maxWorldCol) startCol = gp.maxWorldCol - 1;
+		if(startRow >= gp.maxWorldRow) startRow = gp.maxWorldRow - 1;
 		if(startCol < 0) startCol = 0;
 		if(startRow < 0) startRow = 0;
 		
