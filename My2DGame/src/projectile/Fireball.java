@@ -11,10 +11,10 @@ public class Fireball extends Projectile {
 		super(gp);
 		
 		name = "Fireball";
-		speed = 8;
+		speed = 7;
 		maxHP = 60;
 		currentHP = maxHP;
-		projectileAttack = 2;
+		projectileAttack = 3;
 		mpCost = 1;
 		alive = false;
 	}

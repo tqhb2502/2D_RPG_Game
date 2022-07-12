@@ -11,10 +11,10 @@ public class Rock extends Projectile {
 		super(gp);
 		
 		name = "Rock";
-		speed = 5;
-		maxHP = 60;
+		speed = 8;
+		maxHP = 80;
 		currentHP = maxHP;
-		projectileAttack = 1;
+		projectileAttack = 4;
 		mpCost = 1;
 		alive = false;
 	}

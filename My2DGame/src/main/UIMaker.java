@@ -22,8 +22,9 @@ public class UIMaker {
 	public int commandNum = 0;
 	
 	public String currentDialogue;
-	BufferedImage heart_full, heart_half, heart_blank,mana_full,mana_blank;
+	BufferedImage heart_full, heart_half, heart_blank, mana_full, mana_blank;
 	
+	// CONSTRUCTOR
 	public UIMaker(GamePanel gp) {
 		this.gp = gp;
 		
@@ -100,6 +101,7 @@ public class UIMaker {
 			i++;
 			x+= gp.tileSize;
 		}
+		
 		// DRAW MAX MP
 		x = gp.tileSize/2-5;
 		y =  (int)(gp.tileSize*1.5);
@@ -119,7 +121,6 @@ public class UIMaker {
 			i++;
 			x+=35;
 		}
-		
 	}
 	
 	public void drawSkillStatus() {
@@ -247,7 +248,7 @@ public class UIMaker {
 	}
 	
 	public void drawDialogueScreen() {
-		// WINDOW
+		// window
 		int x = gp.tileSize * 2;
 		int y = gp.tileSize / 2;
 		int width = gp.screenWidth - gp.tileSize * 4;
@@ -255,7 +256,7 @@ public class UIMaker {
 		
 		drawSubWindow(x, y, width, height);
 		
-		// DIALOGUE
+		// dialogue
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 28F));
 		x += gp.tileSize;
 		y += gp.tileSize;

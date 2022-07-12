@@ -9,7 +9,7 @@ public class EventHandler {
 	
 	public void checkEvent() {
 	
-		// map 1
+		// MAP 1
 		if (gp.currentMap == gp.map1) {
 			
 			if (hitEvent(2, 49)) { teleportMap2(11, 1); }
@@ -17,13 +17,13 @@ public class EventHandler {
 			if (hitEvent(47, 0)) { endGame(); }
 		}
 		
-		// map 2
+		// MAP 2
 		else if (gp.currentMap == gp.map2) {
 			
 			if (hitEvent(11, 0)) { teleportMap1(2, 48); }
 		}
 		
-		// map 3
+		// MAP 3
 		else if (gp.currentMap == gp.map3) {
 			
 			if (hitEvent(34, 0)) { teleportMap1(47, 48); }

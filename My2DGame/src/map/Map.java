@@ -24,8 +24,11 @@ public class Map {
 	
 	public int data[][];
 	
+	// CONSTRUCTOR
 	public Map(GamePanel gp) {
+		
 		this.gp = gp;
+		
 		tile = new Tile[8];
 		obj = new Entity[10];
 		npc = new Entity[10];

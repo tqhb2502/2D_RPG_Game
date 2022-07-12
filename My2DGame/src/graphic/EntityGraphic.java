@@ -21,7 +21,7 @@ public class EntityGraphic {
 
 	public int spriteNum = 1; // the index of current displayed image
 	
-	//HPbar
+	// HP bar
 	public boolean hpBarOn = false;
 	int hpBarCount = 0;
 

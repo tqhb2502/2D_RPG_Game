@@ -10,6 +10,7 @@ public class Sound {
 	Clip clip;	// used to open audio file
 	URL soundURL[] = new URL[30];	// used to store file path of audio files
 	
+	// CONSTRUCTOR
 	public Sound() {
 		soundURL[0] = getClass().getResource("/sound/BlueBoyAdventure.wav");
 		soundURL[1] = getClass().getResource("/sound/coin.wav");

@@ -13,24 +13,25 @@ public abstract class Entity { // parent class for every entity in the game
 	public EntityGraphic entityGraphic;
 	public Counter counter;
 
+	// POSITION
 	public int worldX, worldY; // position of entity in world map
 	public int defaultWorldX, defaultWorldY;
-	public String name;
+
+	// TYPE
 	public int type; // 0 = player, 1 = object, 2 = NPC, 3 = monster
 	public final int type_player = 0;
 	public final int type_object = 1;
 	public final int type_NPC = 2;
 	public final int type_monster = 3;
 
-	public int speed;
-	public int defaultSpeed;
+	// ACTION
 	public String direction = "none"; // the direction of entity
 	public boolean attacking = false;
 	public boolean dashing = false;
 	public boolean alive;
-
 	public boolean invincible = false; // can receive damage from monsters or not
 
+	// COLLISION
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48); // the solid area of entity, if it hit a tile that is not
 																// passable, entity can not move
 	public int solidAreaDefaultX = 0, solidAreaDefaultY = 0; // store default value of solidArea, because we may change
@@ -39,15 +40,20 @@ public abstract class Entity { // parent class for every entity in the game
 	public boolean collision = false; // this entity can be pass through or not
 	public Rectangle attackArea = new Rectangle(0, 0, 0, 0); // damage area when attacking
 
+	// PATH FINDING
 	public boolean onPath = false;
 
-	// entity status
+	// STATUS
+	public String name;
+	public int speed;
+	public int defaultSpeed;
 	public int maxHP;
 	public int currentHP;
 	public int maxMP;
 	public int currentMP;
 	public int normalAttack;
 	public Projectile projectile;
+	public int defense;
 
 	// CONSTRUCTOR
 	public Entity(GamePanel gp) {
@@ -90,8 +96,10 @@ public abstract class Entity { // parent class for every entity in the game
 	public void update() {
 		// DIRECTION
 		setAction();
+		
 		// COLLISION
 		checkCollision();
+		
 		// MOVEMENT
 		if (collisionOn == false) {
 			switch (direction) {
@@ -133,7 +141,8 @@ public abstract class Entity { // parent class for every entity in the game
 			}
 
 		}
-
+		
+		// SHOT COUNTDOWN
 		if (counter.shotAvailableCounter < 30) {
 			counter.shotAvailableCounter++;
 		}
@@ -141,7 +150,9 @@ public abstract class Entity { // parent class for every entity in the game
 
 	public void damagePlayer(int attack) {
 		if (gp.player.invincible == false) {
-			gp.player.currentHP -= attack;
+			if(attack > gp.player.defense) {
+				gp.player.currentHP -= (attack - gp.player.defense);
+			}
 			gp.player.invincible = true;
 		}
 	}
@@ -163,7 +174,6 @@ public abstract class Entity { // parent class for every entity in the game
 		gp.pFinder.setNodes(startCol, startRow, goalCol, goalRow,this);
 		
 		if(gp.pFinder.search() == true) {
-			//System.out.println(1);
 			int nextX = gp.pFinder.pathList.get(0).col * gp.tileSize;
 			int nextY = gp.pFinder.pathList.get(0).row * gp.tileSize;
 			
@@ -219,8 +229,8 @@ public abstract class Entity { // parent class for every entity in the game
 
 	}
 	
-	public void setDefault(int x, int y) {
-		defaultWorldX = x;
-		defaultWorldY = y;
+	public void setDefaultPosition() {
+		defaultWorldX = worldX;
+		defaultWorldY = worldY;
 	}
 }
