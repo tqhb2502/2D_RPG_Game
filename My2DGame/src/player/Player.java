@@ -106,7 +106,7 @@ public class Player extends Entity {
 			speed = 12;
 			entityGraphic.spriteNum = 2;
 
-			counter.dashAvailableCounter = 300;
+			counter.dashAvailableCounter = 180;
 		}
 
 		if (counter.dashAvailableCounter > 0) {
@@ -247,7 +247,7 @@ public class Player extends Entity {
 			entityGraphic.spriteNum = 1;
 		}
 
-		if (5 < counter.frameCounter && counter.frameCounter <= 25) {
+		if (5 < counter.frameCounter && counter.frameCounter <= 18) {
 			entityGraphic.spriteNum = 2;
 
 			// save player's worldX, worldY and solidArea
@@ -288,7 +288,7 @@ public class Player extends Entity {
 			solidArea.height = solidAreaHeight;
 		}
 
-		if (25 < counter.frameCounter) {
+		if (18 < counter.frameCounter) {
 			entityGraphic.spriteNum = 1;
 			counter.frameCounter = 0;
 			attacking = false;

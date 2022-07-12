@@ -43,14 +43,14 @@ public class Dragon extends Entity {
 	public void setImage() {
 
 		try {
-			this.entityGraphic.up1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up1.png"));
-			this.entityGraphic.up2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up2.png"));
-			this.entityGraphic.down1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up1.png"));
-			this.entityGraphic.down2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up2.png"));
-			this.entityGraphic.left1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up1.png"));
-			this.entityGraphic.left2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up2.png"));
-			this.entityGraphic.right1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up1.png"));
-			this.entityGraphic.right2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up2.png"));
+			this.entityGraphic.up1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_1.png"));
+			this.entityGraphic.up2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_2.png"));
+			this.entityGraphic.down1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_1.png"));
+			this.entityGraphic.down2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_2.png"));
+			this.entityGraphic.left1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_1.png"));
+			this.entityGraphic.left2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_2.png"));
+			this.entityGraphic.right1 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_1.png"));
+			this.entityGraphic.right2 = ImageIO.read(getClass().getResourceAsStream("/monster/dr_up_2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
