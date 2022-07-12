@@ -1,3 +1,6 @@
+/entity/
+/graphic/
+/item/
 /main/
 /map/
 /monster/
@@ -5,5 +8,3 @@
 /path_finder/
 /player/
 /projectile/
-/entity/
-/graphic/
