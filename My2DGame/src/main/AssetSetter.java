@@ -28,8 +28,8 @@ public class AssetSetter {
 			// npc
 		gp.map1.npc[0] = new OldMan(gp);
 		gp.map1.npc[0].setEntityGraphic(new EntityGraphic(gp.map1.npc[0]));
-		gp.map1.npc[0].worldX = gp.tileSize * 14;
-		gp.map1.npc[0].worldY = gp.tileSize * 28;
+		gp.map1.npc[0].worldX = gp.tileSize * 12;
+		gp.map1.npc[0].worldY = gp.tileSize * 18;
 		
 			// monster
 		gp.map1.monster[0] = new GreenSlime(gp);
@@ -202,6 +202,8 @@ public class AssetSetter {
 		
 		// DEFAULT POSITION
 		// map 1
+		gp.map1.npc[0].setDefaultPosition();
+		
 		gp.map1.monster[0].setDefaultPosition();
 		gp.map1.monster[1].setDefaultPosition();
 		gp.map1.monster[2].setDefaultPosition();
